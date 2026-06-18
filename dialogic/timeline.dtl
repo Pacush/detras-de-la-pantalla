@@ -1,0 +1,28 @@
+join alien center [animation="Slide From Right"]
+alien: Hey.
+...
+alien: No pareces estar muy motivado, ¿verdad?
+...
+¿Tan evidente es mi apatía?
+mc: Algo así. ¿Se nota demasiado?
+alien: Tu cara te delata.
+update alien right [move_time="0.2"]
+join natsuri (neutral) left [animation="Slide From Left"]
+natsuri (neutral): No sabría decir si lo que tienes es tristeza o cansancio, pero definitivamente te ves apagado.
+mc: Lo que fuera, no creo que te importe
+update natsuri (angry) left [animation="Bounce" repeat="3" move_time="0.2"]
+natsuri (angry): !!!
+leave natsuri [animation="Slide To Left"]
+[wait time="1.0"]
+update alien center [move_time="0.2"]
+alien: Deberías de dejar de ser tan duro con ella. Se siente raro estar entre ustedes cuando pelean.
+mc: No te afecta nada. ¿Por qué no solo nos ignoras?
+mc: Además, mi problema es con ella. Tú y yo estamos bien.
+alien: Lo sé, pero...
+update alien left [mirrored="true" move_time="0.4"]
+alien: Pareciera que ni puedo convivir con los dos a la vez
+alien: Hablo con uno o hablo con otro
+mc: Por mi mejor
+update alien center [z_index="0" mirrored="false" move_time="0.2"]
+alien: ...
+update alien center [z_index="0" mirrored="false" move_time="0.2"]

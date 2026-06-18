@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DialogicGlossary" format=3 uid="uid://di540tlp4h5if"]
+
+[ext_resource type="Script" uid="uid://80elcodyqohb" path="res://addons/dialogic/Modules/Glossary/glossary_resource.gd" id="1_1j5th"]
+
+[resource]
+script = ExtResource("1_1j5th")
+entries = {
+"Hello": {
+"alternatives": [],
+"case_sensitive": true,
+"name": "Hello",
+"text": "An initial greeting",
+"title": "Hello"
+}
+}
