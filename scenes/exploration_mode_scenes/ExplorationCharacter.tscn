@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dj1vxlymxukb8"]
+
+[ext_resource type="Script" uid="uid://b0b3n6d58bh47" path="res://scenes/exploration_mode_scenes/exploration_character.gd" id="1_26jpb"]
+
+[node name="ExplorationCharacter" type="CharacterBody2D" unique_id=429553489]
+script = ExtResource("1_26jpb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1405131424]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=282810656]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=432435495]
+position_smoothing_enabled = true

@@ -25,4 +25,11 @@ alien: Hablo con uno o hablo con otro
 mc: Por mi mejor
 update alien center [z_index="0" mirrored="false" move_time="0.2"]
 alien: ...
-update alien center [z_index="0" mirrored="false" move_time="0.2"]
+update alien [animation="Shrug" length="2.0" wait="true"]
+alien: ¿Les molestaría acompañarme por un jugo a la tienda?
+alien: Espero que sí, porque su otra opción es quedarse ustedes solos aquí
+mc: Hm...
+update alien right [move_time="0.2"]
+join natsuri left [animation="Slide From Left" length="0.2" wait="true" mirrored="true"]
+natsuri (neutral): ¡Yo sí te acompaño!
+[signal arg="leave_library_table"]
