@@ -31,9 +31,10 @@ directories/dtl_directory={
 }
 layout/style_directory={
 "": "res://dialogic/styles/style1.tres",
-"style1": "res://dialogic/styles/style1.tres"
+"style1": "res://dialogic/styles/style1.tres",
+"style2 (custom)": "res://dialogic/styles/style2 (custom).tres"
 }
-layout/style_list=["res://dialogic/styles/style1.tres"]
+layout/style_list=["res://dialogic/styles/style1.tres", "res://dialogic/styles/style2 (custom).tres"]
 layout/default_style="res://dialogic/styles/style1.tres"
 glossary/default_case_sensitive=true
 glossary/glossary_files=["uid://di540tlp4h5if"]
@@ -55,6 +56,21 @@ choices/reveal_delay=0
 choices/reveal_by_input=false
 save/autosave_delay=60.0
 save/encryption_on_exports_only=true
+text/autopauses={}
+audio/channel_defaults={
+"": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": false,
+"volume": 0.0
+},
+"music": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": true,
+"volume": 0.0
+}
+}
 
 [display]
 
