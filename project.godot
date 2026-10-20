@@ -35,8 +35,10 @@ directories/dch_directory={
 }
 directories/dtl_directory={
 "cap1_historia_darwin": "res://dialogic/timelines/cap1_historia_darwin.dtl",
-"timeline": "res://dialogic/timeline.dtl",
-"timelines/timeline": "res://dialogic/timelines/timeline.dtl"
+"cap1_minijuego2": "res://dialogic/timelines/cap1_minijuego2.dtl",
+"cap1_rama_ceder": "res://dialogic/timelines/cap1_rama_ceder.dtl",
+"cap1_rama_negarse": "res://dialogic/timelines/cap1_rama_negarse.dtl",
+"timeline": "res://dialogic/timeline.dtl"
 }
 layout/style_directory={
 "": "res://dialogic/styles/style1.tres",
