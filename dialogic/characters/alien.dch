@@ -6,7 +6,18 @@
 &"custom_info": {
 "prefix": "",
 "sound_mood_default": "",
-"sound_moods": {},
+"sound_moods": {
+"neutral": {
+"mode": 0,
+"name": "neutral",
+"pitch_base": 1.2,
+"pitch_variance": 0.1,
+"skip_characters": 0.0,
+"sound_path": "res://assets/sounds/typing_alien.mp3",
+"volume_base": 0.0,
+"volume_variance": 0.0
+}
+},
 "style": "style2 (custom)",
 "suffix": ""
 },
@@ -24,7 +35,8 @@
 "mirror": false,
 "offset": Vector2(0, 0),
 "scale": 1,
-"scene": ""
+"scene": "",
+"sound_mood": "neutral"
 }
 },
 &"scale": 0.5

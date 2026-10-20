@@ -1,0 +1,339 @@
+[style name="style2 (custom)"]
+
+# ============================================================
+# CAPÍTULO 1: EL PESO DE UN DÍA ORDINARIO
+# Historia de Darwin — Acoso escolar y desatención familiar
+# ============================================================
+
+# --- FASE 1: MAÑANA EN EL CUARTO ---
+# [PLACEHOLDER FONDO] Cuarto de Darwin por la mañana. Usar room.jpg temporal.
+[background arg="res://assets/backgrounds/room.jpg" fade="0.0"]
+
+# Narración de apertura — sin personaje en pantalla, solo voz interior
+[wait time="0.5"]
+Darwin (poker): ...
+[wait time="0.5"]
+
+# Texto narrativo
+Hoy es martes.
+No hay nada que distinga este martes de cualquier otro.
+Ni uno solo.
+
+[wait time="0.8"]
+join darwin (poker) center [animation="Fade In" length="0.8"]
+[wait time="0.5"]
+
+Darwin (poker): Mochila... cuadernos... lápices...
+Darwin (poker): Siempre me olvido del sacapuntas.
+
+[wait time="0.4"]
+update darwin (sad) center
+
+Darwin (sad): ...¿Hay alguien despierto?
+
+[wait time="1.0"]
+# Silencio. Nadie responde.
+El cuarto de lado no tiene sonido.
+Papá sigue dormido.
+Mamá se fue temprano a trabajar, como todos los días.
+
+[wait time="0.5"]
+Darwin (sad): ...Normal.
+
+[wait time="0.6"]
+# Texto en voz interior de Darwin
+No hay nadie para despedirse.
+Nunca hay nadie.
+
+[wait time="0.5"]
+Darwin (poker): ...
+
+# [NOTA DESARROLLADOR] Aquí irá un minijuego de "Organizar la Mochila"
+# (arrastrar útiles dentro de la mochila en tiempo relajado).
+# La siguiente línea es el texto que aparece al terminar el minijuego.
+
+[wait time="0.4"]
+Todo listo para la escuela.
+update darwin (poker) center
+
+Darwin (poker): ...Está bien.
+Darwin (poker): Que tengas buen día, nadie.
+
+[wait time="0.3"]
+leave darwin [animation="Fade Out" length="0.6"]
+[wait time="0.8"]
+
+# --- TRANSICIÓN: CAMINO A LA ESCUELA ---
+# Texto de transición — pantalla oscura / fade
+[wait time="0.5"]
+# [PLACEHOLDER FONDO] CALLE
+[background arg="#b4f5f8ff" fade="0.0"]
+La distancia entre la casa y la escuela es de doce minutos caminando.
+Doce minutos en los que nadie lo espera del otro lado.
+Ni de este tampoco.
+
+[wait time="0.8"]
+
+# --- FASE 3: PASILLO DE LA SECUNDARIA ---
+# [PLACEHOLDER FONDO] Pasillo de secundaria. Usar library_1.jpeg temporal hasta tener school.jpg.
+[background arg="res://assets/backgrounds/school.jpg" fade="0.0"]
+[wait time="0.5"]
+
+join darwin (poker) center [animation="Slide From Right"]
+[wait time="0.4"]
+
+Darwin (poker): Casillero... número 47.
+
+[wait time="0.3"]
+Darwin (poker): ...
+
+# Pausa. Algo no está bien. Darwin lo percibe antes de verlos.
+[wait time="0.5"]
+
+La sensación llega primero.
+Ese peso en el pecho.
+Ese zumbido sordo detrás de los oídos.
+
+[wait time="0.5"]
+
+# Los tres acosadores aparecen — sprites temporales "Generic Bad Man"
+join acosador1_por_definir (threatening) right [animation="Slide From Right" length="0.3"]
+[wait time="0.2"]
+join acosador2_por_definir (default) right [animation="Fade In" length="0.2"]
+[wait time="0.1"]
+join acosador3_por_definir (smirking) left [animation="Slide From Left" length="0.3"]
+[wait time="0.4"]
+
+update darwin (scared) center
+
+# Acosador principal habla
+acosador1_por_definir (threatening): Darwin.
+
+[wait time="0.3"]
+acosador1_por_definir (threatening): Qué bueno que llegaste.
+acosador1_por_definir (threatening): Necesitamos la tarea de matemáticas.
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): Y los cien pesos para la salida.
+
+[wait time="0.1"]
+acosador3_por_definir (smirking): Ya sabes qué pasa si no los traes.
+
+[wait time="0.5"]
+# Voz interior de Darwin
+update darwin (scared) center
+
+Darwin no responde. Los mira.
+Calcula.
+
+[wait time="0.4"]
+# Pensamiento interior — sin portrait de Darwin visible, solo texto
+Si les digo que no...
+...volverán a encerrarme en el baño.
+Si les doy el dinero...
+...no tendré para comer hoy.
+
+[wait time="0.3"]
+A nadie en mi casa le importa de todos modos.
+
+[wait time="0.5"]
+update darwin (resigned) center
+
+# --- FASE 4: ÁRBOL DE DECISIÓN ---
+[choice]
+- Entregarles el dinero.: goto ceder_miedo
+- Negarse.: goto negarse
+
+# ===========================
+# RAMA A: CEDER POR MIEDO
+# ===========================
+[label ceder_miedo]
+
+Darwin (resigned): ...Aquí está.
+
+[wait time="0.3"]
+Darwin saca el billete con la mano temblorosa.
+Una mano que quisiera desaparecer junto con el resto de su cuerpo.
+
+[wait time="0.4"]
+acosador1_por_definir (mocking): Eso es.
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): ¿Ves? Sabía que podías ser razonable.
+
+[wait time="0.2"]
+# Empujón
+update darwin (broken) center
+Se ríen.
+Un empujón en el hombro, como si fuera un chiste.
+
+[wait time="0.4"]
+leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador2_por_definir [animation="Fade Out" length="0.3"]
+leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
+[wait time="0.6"]
+
+Darwin (broken): ...
+Darwin (broken): ...Bien.
+
+[wait time="0.4"]
+Te quedaste sin comer.
+Pero por hoy estás a salvo.
+Hasta mañana.
+
+[wait time="0.5"]
+# La saturación del fondo baja — efecto lúgubre
+# [NOTA DESARROLLADOR] Aquí aplicar shader de desaturación al fondo vía señal o código.
+[signal arg="pasillo_desaturar"]
+
+[wait time="0.4"]
+Darwin (sad): ...¿Por qué nadie dice nada?
+
+[wait time="0.3"]
+Los demás alumnos en el pasillo vieron todo.
+Ninguno se movió.
+Ninguno dijo nada.
+La indiferencia tiene una forma muy particular de doler.
+
+[wait time="0.5"]
+update darwin (sad) center
+
+Darwin (sad): ...
+[wait time="0.3"]
+goto minijuego_2
+
+# ===========================
+# RAMA B: INTENTAR NEGARSE
+# ===========================
+[label negarse]
+
+update darwin (scared) center
+Darwin (scared): Yo... no tengo dinero.
+
+[wait time="0.3"]
+acosador1_por_definir (threatening): ¿Cómo dijiste?
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): Qué gracioso.
+
+[wait time="0.3"]
+# Le arrancan la mochila
+update darwin (broken) center
+
+De un tirón le quitan la mochila de los hombros.
+Las cosas caen al suelo. Los cuadernos, los lápices, todo lo que tomó tanto tiempo acomodar esta mañana.
+
+[wait time="0.5"]
+acosador3_por_definir (smirking): Ah, mira, cuántos cuadernitos.
+
+[wait time="0.2"]
+acosador1_por_definir (mocking): ¿Para qué los necesitas si de todas formas no estudias?
+
+[wait time="0.3"]
+Los arrancan. Los rompen.
+Frente a todos.
+Nadie interviene.
+
+[wait time="0.5"]
+Darwin (broken): ...
+
+[wait time="0.4"]
+leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador2_por_definir [animation="Fade Out" length="0.3"]
+leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
+[wait time="0.6"]
+
+Darwin se agacha a recoger lo que puede.
+Las hojas están arrugadas. Algunas, rotas por la mitad.
+
+[wait time="0.4"]
+Darwin (broken): ...
+Darwin (broken): Está bien.
+Darwin (broken): No necesitaba esos cuadernos.
+
+[wait time="0.4"]
+No era verdad.
+Los necesitaba.
+Pero decirlo no iba a devolverlos.
+
+[wait time="0.5"]
+# [NOTA DESARROLLADOR] Aquí cambiar postura del sprite de Darwin a "encorvada" vía señal.
+[signal arg="darwin_postura_encorvada"]
+
+[wait time="0.3"]
+goto minijuego_2
+
+# ===========================
+# FASE 5: MINIJUEGO 2
+# ===========================
+[label minijuego_2]
+[background arg="res://assets/backgrounds/room.jpg" fade="0.0"]
+
+update darwin (broken) center
+[wait time="0.5"]
+
+# [NOTA DESARROLLADOR] Aquí irá un minijuego de "El Peso del Silencio":
+# Button masher — mantener barra de resistencia centrada
+# mientras caen palabras despectivas pixeladas.
+# Si falla → RETRY. Al ganar → continúa.
+[signal arg="trigger_minijuego_peso_silencio"]
+
+[wait time="0.8"]
+
+# --- FASE FINAL: DE REGRESO A CASA ---
+[background arg="#000000ff" fade="0.0"]
+
+join darwin (broken) center [animation="Fade In" length="0.8"]
+[wait time="0.5"]
+
+La habitación huele a cerrado.
+La luz del pasillo está apagada.
+Nadie encendió nada.
+
+[wait time="0.5"]
+[background arg="res://assets/backgrounds/room.jpg" fade="0.0"]
+Darwin (broken): ...¿Mamá?
+
+[wait time="0.8"]
+Silencio.
+[wait time="0.5"]
+
+Darwin (broken): ...¿Papá?
+
+[wait time="1.0"]
+Silencio.
+[wait time="0.4"]
+
+update darwin (sad) center
+Darwin se sienta en el borde de la cama.
+No llora.
+Ya aprendió que llorar no llama a nadie.
+
+[wait time="0.5"]
+Darwin (sad): ...
+[wait time="0.3"]
+
+Llegas a tu casa.
+Tu cuarto está a oscuras.
+Nadie pregunta cómo te fue.
+
+[wait time="0.6"]
+El silencio de la casa duele más que los golpes de la escuela.
+
+[wait time="0.8"]
+update darwin (broken) center
+Darwin (broken): ...
+
+[wait time="0.6"]
+Mañana va a ser igual.
+Pero eso es un problema de mañana.
+
+[wait time="0.5"]
+Darwin (broken): ...Que así sea.
+
+[wait time="0.8"]
+leave darwin [animation="Fade Out" length="1.0"]
+[wait time="1.0"]
+
+# Pantalla a negro. Fin del Capítulo 1.
+[signal arg="cap1_fin"]

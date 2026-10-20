@@ -1,36 +1,17 @@
 [style name="style2 (custom)"]
-join alien center [animation="Slide From Right"]
-alien: Hey.
-...
-alien: No pareces estar muy motivado, ¿verdad?
-...
-¿Tan evidente es mi apatía?
-mc: Algo así. ¿Se nota demasiado?
-alien: Tu cara te delata.
-update alien right [move_time="0.2"]
-join natsuri (neutral) left [animation="Slide From Left"]
-natsuri (neutral): No sabría decir si lo que tienes es tristeza o cansancio, pero definitivamente te ves apagado.
-mc: Lo que fuera, no creo que te importe
-update natsuri (angry) left [animation="Bounce" repeat="3" move_time="0.2"]
-natsuri (angry): !!!
-leave natsuri [animation="Slide To Left"]
+
+# ============================================================
+# TIMELINE PRINCIPAL — Punto de entrada del juego
+# Redirige al capítulo activo.
+# ============================================================
+
+# Pantalla de título / intro
+[background arg="#000000ff" fade="0.0"]
 [wait time="1.0"]
-update alien center [move_time="0.2"]
-alien: Deberías de dejar de ser tan duro con ella. Se siente raro estar entre ustedes cuando pelean.
-mc: No te afecta nada. ¿Por qué no solo nos ignoras?
-mc: Además, mi problema es con ella. Tú y yo estamos bien.
-alien: Lo sé, pero...
-update alien left [mirrored="true" move_time="0.4"]
-alien: Pareciera que ni puedo convivir con los dos a la vez.
-alien: Hablo con uno o hablo con otro.
-mc: Por mí mejor.
-update alien center [z_index="0" mirrored="false" move_time="0.2"]
-alien: ...
-update alien [animation="Shrug" length="2.0" wait="true"]
-alien: ¿Les molestaría acompañarme por un jugo a la tienda?
-alien: Espero que sí, porque su otra opción es quedarse ustedes solos aquí.
-mc: Hm...
-update alien right [move_time="0.2"]
-join natsuri left [animation="Slide From Left" length="0.2" wait="true" mirrored="true"]
-natsuri (neutral): ¡Yo sí te acompaño!
-[signal arg="leave_library_table"]
+
+Detrás de la pantalla.
+
+[wait time="1.2"]
+
+# Ir al Capítulo 1
+jump cap1_historia_darwin/

@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_wxyz"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wxyz")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.1, 1)
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ajustes"
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(0.9, 0.8, 1, 1)
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(150, 50)
+text = "Atrás"
+theme_override_font_sizes/font_size = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="MasterVolumeContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "Volumen Principal"
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="VBoxContainer/MasterVolumeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.0
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="TextSpeedContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBoxContainer/TextSpeedContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(200, 0)
+text = "Velocidad de Texto"
+theme_override_font_sizes/font_size = 20
+vertical_alignment = 1
+
+[node name="TextSpeedSlider" type="HSlider" parent="VBoxContainer/TextSpeedContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.5
+max_value = 2.0
+step = 0.1
+value = 1.0

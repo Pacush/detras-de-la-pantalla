@@ -1,9 +1,17 @@
 extends DialogicAnimation
 
 func animate() -> void:
+	# 1. Validación de seguridad: si el nodo ya no existe o salió del árbol, 
+	# terminamos la animación inmediatamente para evitar el crash.
+	if not is_instance_valid(node) or not node.is_inside_tree():
+		finished_once.emit()
+		return
+
 	var tween := (node.create_tween() as Tween)
 
-	var start_height: float = base_position.y + node.get_viewport().size.y / 5
+	# 2. Obtenemos la altura del viewport de forma segura
+	var viewport_height: float = node.get_viewport_rect().size.y
+	var start_height: float = base_position.y + viewport_height / 5.0
 	var end_height := base_position.y
 
 	var start_modulation := 0.0

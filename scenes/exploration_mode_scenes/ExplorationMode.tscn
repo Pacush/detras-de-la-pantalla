@@ -3,29 +3,29 @@
 [ext_resource type="Texture2D" uid="uid://wqs1vw3p6pfj" path="res://assets/backgrounds/library_2.png" id="1_64drd"]
 [ext_resource type="PackedScene" uid="uid://dj1vxlymxukb8" path="res://scenes/exploration_mode_scenes/ExplorationCharacter.tscn" id="1_deli7"]
 [ext_resource type="Texture2D" uid="uid://b7wskmguvofa5" path="res://assets/characters/Mc/mc.png" id="2_64drd"]
-[ext_resource type="Texture2D" uid="uid://drgj3o8fhg7ry" path="res://assets/characters/Alien/alien.png" id="3_vaeyd"]
+[ext_resource type="SpriteFrames" path="res://assets/characters/Darwin/darwin_exploration_frames.tres" id="3_darwin"]
 [ext_resource type="Texture2D" uid="uid://b5ppl5kpculh6" path="res://assets/characters/Natsuri/Natsuri angry.png" id="4_faw75"]
 
-[node name="ExplorationMode" type="Node2D" unique_id=1844777800]
+[node name="ExplorationMode" type="Node2D"]
 
-[node name="background" type="TextureRect" parent="." unique_id=837751086]
+[node name="background" type="TextureRect" parent="."]
 offset_right = 2600.0
 offset_bottom = 1080.0
 texture = ExtResource("1_64drd")
 expand_mode = 1
 
-[node name="Natsuri" parent="." unique_id=1901125552 node_paths=PackedStringArray("target_to_follow") instance=ExtResource("1_deli7")]
+[node name="Natsuri" parent="." node_paths=PackedStringArray("target_to_follow") instance=ExtResource("1_deli7")]
 position = Vector2(911, 670)
 character_role = 1
 character_texture = ExtResource("4_faw75")
-target_to_follow = NodePath("../Alien")
+target_to_follow = NodePath("../Darwin")
 
-[node name="Alien" parent="." unique_id=1946405596 node_paths=PackedStringArray("target_to_follow") instance=ExtResource("1_deli7")]
+[node name="Darwin" parent="." node_paths=PackedStringArray("target_to_follow") instance=ExtResource("1_deli7")]
 position = Vector2(950, 670)
 character_role = 1
-character_texture = ExtResource("3_vaeyd")
+animation_frames = ExtResource("3_darwin")
 target_to_follow = NodePath("../Mc")
 
-[node name="Mc" parent="." unique_id=429553489 instance=ExtResource("1_deli7")]
+[node name="Mc" parent="." instance=ExtResource("1_deli7")]
 position = Vector2(991, 670)
 character_texture = ExtResource("2_64drd")

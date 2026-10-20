@@ -1,0 +1,27 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://6x1vgpujdqmt"]
+
+[ext_resource type="Texture2D" uid="uid://dn8wr5rxso07d" path="res://assets/characters/Darwin/darwin_exploration_0.png" id="1_idle"]
+[ext_resource type="Texture2D" uid="uid://ba63rfsfxkcp8" path="res://assets/characters/Darwin/darwin_exploration_1.png" id="2_walk1"]
+[ext_resource type="Texture2D" uid="uid://crosrhq581a75" path="res://assets/characters/Darwin/darwin_exploration_2.png" id="3_walk2"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_walk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_walk2")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]

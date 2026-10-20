@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c15s6fopkerhd"
-path="res://.godot/imported/TextBox256.png-b9586bed9087d9bf95718293900fb886.ctex"
+uid="uid://cg7hjyv5c8bnb"
+path="res://.godot/imported/Darwin Poker.png-a1f9540ab1ff172db04219a0db8e905e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/resources/TextBox256.png"
-dest_files=["res://.godot/imported/TextBox256.png-b9586bed9087d9bf95718293900fb886.ctex"]
+source_file="res://assets/characters/Darwin/Darwin Poker.png"
+dest_files=["res://.godot/imported/Darwin Poker.png-a1f9540ab1ff172db04219a0db8e905e.ctex"]
 
 [params]
 

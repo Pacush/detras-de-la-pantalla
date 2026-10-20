@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dq2o6hkw3f1jh"]
+
+[ext_resource type="Script" uid="uid://ctkpowi3dshec" path="res://scripts/pause_menu.gd" id="1_pause"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
+bg_color = Color(0.9098039, 0.8392157, 0.99215686, 1)
+
+[node name="PauseMenu" type="Control" unique_id=1350075236]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pause")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=2102199652]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Sidebar" type="PanelContainer" parent="." unique_id=734642550]
+process_mode = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar" unique_id=759308425]
+process_mode = 3
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="Sidebar/VBoxContainer" unique_id=1034867035]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.7, 0.3, 0.7, 1)
+theme_override_font_sizes/font_size = 36
+text = "PAUSA"
+horizontal_alignment = 1
+
+[node name="Separator1" type="HSeparator" parent="Sidebar/VBoxContainer" unique_id=790155434]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="ResumeButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1908777406]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Return"
+flat = true
+
+[node name="HistoryButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1671563931]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "History"
+flat = true
+
+[node name="SaveButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=636039853]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Save Game"
+flat = true
+
+[node name="LoadButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1038854428]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Load Game"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=449008426]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Settings"
+flat = true
+
+[node name="Separator2" type="HSeparator" parent="Sidebar/VBoxContainer" unique_id=1335819404]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MainMenuButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=625417125]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Main Menu"
+flat = true
+
+[node name="QuitButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1906312367]
+process_mode = 3
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
+theme_override_font_sizes/font_size = 18
+text = "Quit"
+flat = true
+
+[node name="SubmenuContainer" type="Control" parent="." unique_id=2134721307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

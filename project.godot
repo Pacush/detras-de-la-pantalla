@@ -13,21 +13,30 @@ config_version=5
 config/name="Detras de la pantalla"
 run/main_scene="uid://dws3eu0441iod"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bp1hyy54nma87"
 
 [autoload]
 
 Dialogic="*uid://ds2q0uclmolvu"
+PauseManager="*res://scripts/pause_manager.gd"
 
 [dialogic]
 
 directories/dch_directory={
+"acosador1_por_definir": "res://dialogic/characters/acosador1_por_definir.dch",
+"acosador2_por_definir": "res://dialogic/characters/acosador2_por_definir.dch",
+"acosador3_por_definir": "res://dialogic/characters/acosador3_por_definir.dch",
 "alien": "res://dialogic/characters/alien.dch",
+"darwin": "res://dialogic/characters/darwin.dch",
+"mama_por_definir": "res://dialogic/characters/mama_por_definir.dch",
 "mc": "res://dialogic/characters/mc.dch",
-"natsuri": "res://dialogic/characters/natsuri.dch"
+"natsuri": "res://dialogic/characters/natsuri.dch",
+"papa_por_definir": "res://dialogic/characters/papa_por_definir.dch"
 }
 directories/dtl_directory={
-"timeline": "res://dialogic/timeline.dtl"
+"cap1_historia_darwin": "res://dialogic/timelines/cap1_historia_darwin.dtl",
+"timeline": "res://dialogic/timeline.dtl",
+"timelines/timeline": "res://dialogic/timelines/timeline.dtl"
 }
 layout/style_directory={
 "": "res://dialogic/styles/style1.tres",
@@ -71,6 +80,9 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
+history/simple_history_enabled=true
+history/simple_history_save=true
+variables={}
 
 [display]
 
