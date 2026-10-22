@@ -28,17 +28,24 @@ directories/dch_directory={
 "acosador3_por_definir": "res://dialogic/characters/acosador3_por_definir.dch",
 "alien": "res://dialogic/characters/alien.dch",
 "darwin": "res://dialogic/characters/darwin.dch",
+"gael_19": "res://dialogic/characters/gael_19.dch",
 "mama_por_definir": "res://dialogic/characters/mama_por_definir.dch",
 "mc": "res://dialogic/characters/mc.dch",
 "natsuri": "res://dialogic/characters/natsuri.dch",
-"papa_por_definir": "res://dialogic/characters/papa_por_definir.dch"
+"papa_por_definir": "res://dialogic/characters/papa_por_definir.dch",
+"romina": "res://dialogic/characters/romina.dch"
 }
 directories/dtl_directory={
 "cap1_historia_darwin": "res://dialogic/timelines/cap1_historia_darwin.dtl",
+"cap1_historia_romina": "res://dialogic/timelines/cap1_historia_romina.dtl",
 "cap1_minijuego2": "res://dialogic/timelines/cap1_minijuego2.dtl",
 "cap1_rama_ceder": "res://dialogic/timelines/cap1_rama_ceder.dtl",
 "cap1_rama_negarse": "res://dialogic/timelines/cap1_rama_negarse.dtl",
-"timeline": "res://dialogic/timeline.dtl"
+"cap1_romina_minijuego2": "res://dialogic/timelines/cap1_romina_minijuego2.dtl",
+"cap1_romina_rama_enviar": "res://dialogic/timelines/cap1_romina_rama_enviar.dtl",
+"cap1_romina_rama_negarse": "res://dialogic/timelines/cap1_romina_rama_negarse.dtl",
+"timeline": "res://dialogic/timeline.dtl",
+"timeline_romina": "res://dialogic/timeline_romina.dtl"
 }
 layout/style_directory={
 "": "res://dialogic/styles/style1.tres",

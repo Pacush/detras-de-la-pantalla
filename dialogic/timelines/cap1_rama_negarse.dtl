@@ -35,7 +35,7 @@ Darwin (broken): ...
 
 [wait time="0.4"]
 leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
-leave acosador2_por_definir [animation="Fade Out" length="0.3"]
+leave acosador2_por_definir [animation="Slide To Right" length="0.3"]
 leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
 [wait time="0.6"]
 

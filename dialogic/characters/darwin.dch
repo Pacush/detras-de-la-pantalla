@@ -19,7 +19,7 @@
 &"portraits": {
 "broken": {
 "export_overrides": {
-"image": "\"res://assets/characters/Darwin/Darwin Mad.png\""
+"image": "\"res://assets/characters/Darwin/Darwin Broken.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -39,7 +39,7 @@
 },
 "poker": {
 "export_overrides": {
-"image": "\"res://assets/characters/Darwin/Darwin Mad.png\""
+"image": "\"res://assets/characters/Darwin/Darwin Poker.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -49,7 +49,7 @@
 },
 "resigned": {
 "export_overrides": {
-"image": "\"res://assets/characters/Darwin/Darwin Mad.png\""
+"image": "\"res://assets/characters/Darwin/Darwin Resigned.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -59,7 +59,7 @@
 },
 "sad": {
 "export_overrides": {
-"image": "\"res://assets/characters/Darwin/Darwin Mad.png\""
+"image": "\"res://assets/characters/Darwin/Darwin Sad.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -69,7 +69,7 @@
 },
 "scared": {
 "export_overrides": {
-"image": "\"res://assets/characters/Darwin/Darwin Mad.png\""
+"image": "\"res://assets/characters/Darwin/Darwin Scared.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,

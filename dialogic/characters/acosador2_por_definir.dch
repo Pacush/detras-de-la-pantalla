@@ -19,7 +19,7 @@
 &"portraits": {
 "default": {
 "export_overrides": {
-"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+"image": "\"res://assets/characters/Generic Bad Boy/Generic Bad Boy.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -29,7 +29,7 @@
 },
 "laughing": {
 "export_overrides": {
-"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+"image": "\"res://assets/characters/Generic Bad Boy/Generic Bad Boy Laughing.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -38,5 +38,5 @@
 "scene": ""
 }
 },
-&"scale": 0.1
+&"scale": 1.0
 }

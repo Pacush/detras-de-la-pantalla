@@ -24,8 +24,8 @@ var levels: Array = [
 	{"n": 5, "k": 4, "time": 20},
 	{"n": 6, "k": 5, "time": 20},
 	{"n": 7, "k": 6, "time": 30},
-	{"n": 8, "k": 7, "time": 30},
-	{"n": 9, "k": 8, "time": 60},
+	#{"n": 8, "k": 7, "time": 30},
+	#{"n": 9, "k": 8, "time": 60},
 ]
 
 var palette: Array = [

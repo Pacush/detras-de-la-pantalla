@@ -8,6 +8,8 @@ extends PanelContainer
 signal card_pressed(story_id: String)
 signal hover_changed(card: PanelContainer, hovering: bool)
 
+const Click = preload("res://scripts/ui/ui_click.gd")
+
 const CARD_SIZE: Vector2 = Vector2(380, 560)
 const HOVER_SCALE: float = 1.07
 const PRESS_SCALE: float = 0.97
@@ -177,6 +179,7 @@ func _gui_input(event: InputEvent) -> void:
 		# Solo cuenta como click si se suelta dentro de la tarjeta.
 		var inside: bool = Rect2(Vector2.ZERO, size).has_point(mb.position)
 		if was_pressing and inside:
+			Click.play(self)
 			card_pressed.emit(story_id)
 		else:
 			_apply_state()

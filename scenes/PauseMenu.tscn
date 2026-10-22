@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://dq2o6hkw3f1jh"]
 
-[ext_resource type="Script" uid="uid://ctkpowi3dshec" path="res://scripts/pause_menu.gd" id="1_pause"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_pause"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
-bg_color = Color(0.9098039, 0.8392157, 0.99215686, 1)
-
-[node name="PauseMenu" type="Control" unique_id=1350075236]
+[node name="PauseMenu" type="Control"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -15,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pause")
 
-[node name="Overlay" type="ColorRect" parent="." unique_id=2102199652]
+[node name="Overlay" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,103 +20,81 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0, 0, 0, 0.7)
+color = Color(0.03, 0.03, 0.09, 0.78)
 
-[node name="Sidebar" type="PanelContainer" parent="." unique_id=734642550]
+[node name="Sidebar" type="PanelContainer" parent="."]
 process_mode = 3
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 1.0
+anchor_left = 0.04
+anchor_top = 0.06
+anchor_right = 0.30
+anchor_bottom = 0.94
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar" unique_id=759308425]
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar"]
 process_mode = 3
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 14
 
-[node name="Title" type="Label" parent="Sidebar/VBoxContainer" unique_id=1034867035]
+[node name="Title" type="Label" parent="Sidebar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.7, 0.3, 0.7, 1)
-theme_override_font_sizes/font_size = 36
 text = "PAUSA"
 horizontal_alignment = 1
 
-[node name="Separator1" type="HSeparator" parent="Sidebar/VBoxContainer" unique_id=790155434]
+[node name="Separator1" type="HSeparator" parent="Sidebar/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="ResumeButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1908777406]
+[node name="ResumeButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Return"
-flat = true
+text = "Continuar"
 
-[node name="HistoryButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1671563931]
+[node name="HistoryButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "History"
-flat = true
+text = "Historial"
 
-[node name="SaveButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=636039853]
+[node name="SaveButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Save Game"
-flat = true
+text = "Guardar Partida"
 
-[node name="LoadButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1038854428]
+[node name="LoadButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Load Game"
-flat = true
+text = "Cargar Partida"
 
-[node name="SettingsButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=449008426]
+[node name="SettingsButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Settings"
-flat = true
+text = "Ajustes"
 
-[node name="Separator2" type="HSeparator" parent="Sidebar/VBoxContainer" unique_id=1335819404]
+[node name="Separator2" type="HSeparator" parent="Sidebar/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 0
 
-[node name="MainMenuButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=625417125]
+[node name="MainMenuButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Main Menu"
-flat = true
+text = "Menú Principal"
 
-[node name="QuitButton" type="Button" parent="Sidebar/VBoxContainer" unique_id=1906312367]
+[node name="QuitButton" type="Button" parent="Sidebar/VBoxContainer"]
 process_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.3, 0.1, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "Quit"
-flat = true
+text = "Salir"
 
-[node name="SubmenuContainer" type="Control" parent="." unique_id=2134721307]
+[node name="SubmenuContainer" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

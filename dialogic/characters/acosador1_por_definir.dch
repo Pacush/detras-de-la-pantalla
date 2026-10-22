@@ -19,7 +19,7 @@
 &"portraits": {
 "default": {
 "export_overrides": {
-"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+"image": "\"res://assets/characters/Generic Bad Boy/Generic Bad Boy.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -29,7 +29,7 @@
 },
 "mocking": {
 "export_overrides": {
-"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+"image": "\"res://assets/characters/Generic Bad Boy/Generic Bad Boy Laughing.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -39,7 +39,7 @@
 },
 "threatening": {
 "export_overrides": {
-"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+"image": "\"res://assets/characters/Generic Bad Boy/Generic Bad BoySmiling.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,

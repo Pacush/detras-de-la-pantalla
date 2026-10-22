@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2c7ty3iq78ha"
-path="res://.godot/imported/room.jpg-51c8650199ee74eefac0d6a3587fa0bb.ctex"
+uid="uid://bxo3gubxcu2t1"
+path="res://.godot/imported/Generic Bad Boy.png-b8ff25259ae7e2fd3fba4503eb2ef529.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/room.jpg"
-dest_files=["res://.godot/imported/room.jpg-51c8650199ee74eefac0d6a3587fa0bb.ctex"]
+source_file="res://assets/characters/Generic Bad Boy/Generic Bad Boy.png"
+dest_files=["res://.godot/imported/Generic Bad Boy.png-b8ff25259ae7e2fd3fba4503eb2ef529.ctex"]
 
 [params]
 

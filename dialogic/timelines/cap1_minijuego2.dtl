@@ -13,7 +13,7 @@
 [wait time="0.8"]
 
 # --- FASE FINAL: DE REGRESO A CASA ---
-[background arg="res://assets/backgrounds/room.jpg" fade="1.0" transition="Push Left"]
+[background arg="res://assets/backgrounds/room.png" fade="1.0" transition="Push Left"]
 
 join darwin (broken) center [animation="Fade In" length="0.8"]
 [wait time="0.5"]
@@ -50,7 +50,6 @@ Tu cuarto está a oscuras.
 Nadie pregunta cómo te fue.
 
 [wait time="0.6"]
-[background arg="res://assets/backgrounds/room.jpg" fade="1.0" transition="Simple Fade"]
 El silencio de la casa duele más que los golpes de la escuela.
 
 [wait time="0.8"]

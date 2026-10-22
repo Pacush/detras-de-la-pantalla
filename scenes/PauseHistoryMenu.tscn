@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://emftjfhejfxf"]
+[gd_scene load_steps=2 format=3 uid="uid://emftjfhejfxf"]
 
-[ext_resource type="Script" uid="uid://cp3rbplfnom7j" path="res://scripts/pause_history_menu.gd" id="1_hist"]
+[ext_resource type="Script" path="res://scripts/pause_history_menu.gd" id="1_hist"]
 
-[node name="PauseHistoryMenu" type="Control" unique_id=1722362899]
+[node name="PauseHistoryMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,49 +10,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hist")
-
-[node name="Panel" type="PanelContainer" parent="." unique_id=1733521933]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -300.0
-offset_right = 400.0
-offset_bottom = 300.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=13020416]
-layout_mode = 2
-
-[node name="Header" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1514910088]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_constants/separation = 10
-
-[node name="Title" type="Label" parent="Panel/VBoxContainer/Header" unique_id=1123259636]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.9, 0.8, 1, 1)
-theme_override_font_sizes/font_size = 28
-text = "Historial"
-
-[node name="BackButton" type="Button" parent="Panel/VBoxContainer/Header" unique_id=2105938675]
-custom_minimum_size = Vector2(100, 40)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 16
-text = "Atrás"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1988631704]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=111535154]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 10

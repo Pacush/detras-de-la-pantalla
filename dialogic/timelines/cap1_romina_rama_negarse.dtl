@@ -1,0 +1,40 @@
+[style name="style2 (custom)"]
+
+# ===========================
+# RAMA B: NEGARSE A ENVIAR LA IMAGEN
+# ===========================
+
+update romina (uneasy) center
+romina (uneasy): No... no me siento cómoda con eso.
+
+[wait time="0.5"]
+Escribes que no te sientes cómoda.
+Lo lees dos veces antes de enviarlo.
+
+[wait time="0.8"]
+Los tres puntitos aparecen... desaparecen... y aparecen otra vez.
+
+[wait time="0.4"]
+# Consecuencia visual: el fondo del cuarto se oscurece por completo.
+[background arg="#050508ff" fade="2.0" transition="Simple Fade"]
+[wait time="1.8"]
+
+update romina (scared) center
+gael_19 (default): Eres una inmadura. Ya conseguí tu dirección y el contacto de tus papás, así que más te vale colaborar.
+
+[wait time="0.8"]
+romina (scared): ...
+
+[wait time="0.6"]
+Hace un momento era la única persona que te escuchaba.
+Ahora la habitación se siente más pequeña.
+Como si las paredes también leyeran el mensaje.
+
+[wait time="0.5"]
+update romina (broken) center
+
+romina (broken): ...No. No, no, no.
+
+[wait time="0.5"]
+
+jump cap1_romina_minijuego2/

@@ -55,6 +55,12 @@ scene = ExtResource("7_2e68l")
 [sub_resource type="Resource" id="Resource_blbn3"]
 script = ExtResource("2_3n0ta")
 scene = ExtResource("8_1y7mp")
+overrides = {
+"boxes_min_size": "Vector2(680, 68)",
+"boxes_v_separation": "20",
+"choices_custom_button": "\"res://scenes/ui/ChoiceButton.tscn\"",
+"sounds_volume": "-80.0"
+}
 
 [sub_resource type="Resource" id="Resource_kmtik"]
 script = ExtResource("2_3n0ta")
@@ -79,4 +85,4 @@ layer_info = {
 "16": SubResource("Resource_kmtik"),
 "17": SubResource("Resource_6i8u7")
 }
-metadata/_latest_layer = "11"
+metadata/_latest_layer = "15"

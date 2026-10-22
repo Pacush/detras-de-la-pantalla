@@ -1,59 +1,58 @@
-extends Control
+extends "res://scripts/ui/ui_panel_menu.gd"
+## Guardar partida: 5 ranuras.
 
-signal back_to_menu
+const SLOT_COUNT: int = 5
 
-@onready var slots_container = $Panel/VBoxContainer/ScrollContainer/VBoxContainer
+var _saving: bool = false
+
 
 func _ready() -> void:
-	$Panel/VBoxContainer/Header/BackButton.pressed.connect(_on_back)
-	load_save_slots()
-	
-	# Animación de entrada
-	modulate.a = 0
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 0.3)
+	build_frame("Guardar Partida")
+	_fill_slots()
 
-func load_save_slots() -> void:
-	# Limpiar slots anteriores
-	for child in slots_container.get_children():
+
+func _fill_slots() -> void:
+	for child: Node in list.get_children():
 		child.queue_free()
-	
-	# Crear botones para slots (1-5)
-	for slot_num in range(1, 6):
-		var slot_name = "slot_%d" % slot_num
-		create_slot_save_button(slot_name, slot_num)
 
-func create_slot_save_button(slot_name: String, slot_num: int) -> void:
-	var button = Button.new()
-	
-	# 1. Obtenemos la lista real de slots que existen en el disco
-	var saved_slots = Dialogic.Save.get_slot_names()
-	
-	var button_text = ""
-	
-	# 2. Comprobamos si nuestro slot actual está dentro de esa lista
-	if not slot_name in saved_slots:
-		button_text = "[Slot %d] - Vacío" % slot_num
-	else:
-		# Si existe, sacamos la información (aunque los metadatos base estén vacíos)
-		var existing_data = Dialogic.Save.get_slot_info(slot_name)
-		var timeline_name = existing_data.get("timeline", "")
-		
-		# Extraemos un pedazo del último texto para que el jugador sepa dónde guardó
-		var current_line = existing_data.get("dialogic_state_info", {}).get("text", "Partida guardada").left(35)
-		
-		button_text = "[Slot %d] - %s\n%s..." % [slot_num, timeline_name, current_line]
-	
-	button.text = button_text
-	button.custom_minimum_size = Vector2(0, 80)
-	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	button.pressed.connect(_on_slot_selected.bind(slot_name))
-	
-	slots_container.add_child(button)
+	var saved_slots: Variant = Dialogic.Save.get_slot_names()
+	for slot_num: int in range(1, SLOT_COUNT + 1):
+		var slot_name: String = "slot_%d" % slot_num
+		var text: String
+		if slot_name in saved_slots:
+			text = UI.slot_text(slot_name, Dialogic.Save.get_slot_info(slot_name))
+		else:
+			text = "%s\nVacía" % UI.slot_label(slot_name)
+		var btn: Button = make_list_button(text, 116.0 if slot_name in saved_slots else 92.0)
+		btn.pressed.connect(_on_slot_selected.bind(slot_name))
+
+
+## Datos que se guardan junto a la partida: historia, fecha/hora y último diálogo.
+func _build_slot_info() -> Dictionary:
+	var story: String = ""
+	var main_scene: Node = get_tree().current_scene
+	if main_scene != null and main_scene.has_method("get_current_story"):
+		story = str(main_scene.call("get_current_story"))
+
+	var preview: String = ""
+	for entry: Variant in Dialogic.History.get_simple_history():
+		if entry is Dictionary and str(entry.get("text", "")).strip_edges() != "":
+			preview = str(entry.get("text", ""))
+
+	return {
+		"story": story,
+		"saved_at": UI.now_text(),
+		"saved_unix": Time.get_unix_time_from_system(),
+		"preview": preview,
+	}
+
 
 func _on_slot_selected(slot_name: String) -> void:
-	Dialogic.Save.save(slot_name)
-	back_to_menu.emit()
-
-func _on_back() -> void:
+	if _saving:
+		return
+	_saving = true
+	Dialogic.Save.save(slot_name, false, Dialogic.Save.ThumbnailMode.NONE, _build_slot_info())
+	footer.text = "Partida guardada en la %s." % UI.slot_label(slot_name).to_lower()
+	# Pausa breve para que se lea el aviso antes de volver (el árbol está pausado).
+	await get_tree().create_timer(0.7, true).timeout
 	back_to_menu.emit()
