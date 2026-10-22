@@ -4,12 +4,21 @@ var escena_exploracion  = preload("res://scenes/exploration_mode_scenes/Explorat
 var main_menu_scene     = preload("res://scenes/MainMenu.tscn")
 var load_menu_scene     = preload("res://scenes/LoadMenu.tscn")
 var settings_menu_scene = preload("res://scenes/SettingsMenu.tscn")
+var story_select_scene  = preload("res://scenes/StorySelect.tscn")
 var minijuego_mochila_scene = preload("res://scenes/minigames/organizar_mochila/MinijuegoOrganizarMochila.tscn")
 
 var current_menu: Node = null
 var nivel_instanciado: Node = null
 var minijuego_activo: Node = null
 var game_started: bool = false
+var current_story: String = ""
+
+# Timeline de entrada de cada historia.
+# TODO: cuando exista la historia de Romina, apuntar "romina" a su propio timeline.
+const STORY_TIMELINES: Dictionary = {
+	"darwin": "timeline",
+	"romina": "timeline",
+}
 
 # Shader de desaturación para la señal pasillo_desaturar
 const DESATURACION_SHADER_CODE: String = """
@@ -76,6 +85,22 @@ func show_load_menu() -> void:
 	current_menu.slot_selected.connect(load_saved_game)
 
 
+func show_story_select() -> void:
+	if current_menu:
+		current_menu.queue_free()
+	current_menu = story_select_scene.instantiate()
+	add_child(current_menu)
+	current_menu.back_to_menu.connect(show_main_menu)
+	current_menu.story_selected.connect(_on_story_selected)
+
+
+func _on_story_selected(story_id: String) -> void:
+	# La vista ya animó la selección; fundido a negro y arranca la historia.
+	await fade_to_black()
+	start_game(story_id)
+	await fade_from_black()
+
+
 func show_settings_menu() -> void:
 	if current_menu:
 		current_menu.queue_free()
@@ -85,7 +110,7 @@ func show_settings_menu() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	start_game()
+	show_story_select()
 
 func _on_load_game_pressed() -> void:
 	show_load_menu()
@@ -97,15 +122,17 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 
-func start_game() -> void:
+func start_game(story_id: String = "darwin") -> void:
 	if game_started:
 		return
 	game_started = true
+	current_story = story_id
 	if current_menu:
 		current_menu.queue_free()
 		current_menu = null
 	background_node.show()
-	Dialogic.start("timeline")
+	var timeline_name: String = STORY_TIMELINES.get(story_id, "timeline")
+	Dialogic.start(timeline_name)
 
 
 func load_saved_game(slot_name: String) -> void:

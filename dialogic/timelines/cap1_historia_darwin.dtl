@@ -7,7 +7,7 @@
 
 # --- FASE 1: MAÑANA EN EL CUARTO ---
 # [PLACEHOLDER FONDO] Cuarto de Darwin. Usar room.jpg temporal.
-[background arg="res://assets/backgrounds/room.jpg" fade=0.5]
+[background arg="res://assets/backgrounds/room.jpg" fade="1.0"]
 
 [wait time="0.5"]
 Darwin (poker): ...
@@ -72,10 +72,10 @@ Ni de este tampoco.
 
 # --- FASE 3: PASILLO DE LA SECUNDARIA ---
 # [PLACEHOLDER FONDO] Usar library_1.jpeg hasta tener school.jpg.
-[background arg="res://assets/backgrounds/library_1.jpeg" fade=0.5]
+[background arg="res://assets/backgrounds/library_1.jpeg" fade="1.0" transition="Push Right"]
 [wait time="0.5"]
 
-join darwin (poker) center [animation="Slide From Right" length="0.5"]
+join darwin (poker) center [animation="Slide From Right"]
 [wait time="0.4"]
 
 Darwin (poker): Casillero... número 47.
