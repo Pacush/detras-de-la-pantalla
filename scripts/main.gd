@@ -8,12 +8,29 @@ var story_select_scene  = preload("res://scenes/StorySelect.tscn")
 var history_menu_scene: PackedScene = preload("res://scenes/PauseHistoryMenu.tscn")
 var minijuego_mochila_scene = preload("res://scenes/minigames/organizar_mochila/MinijuegoOrganizarMochila.tscn")
 var minijuego_rompecabezas_scene = preload("res://scenes/minigames/rompecabezas/MinijuegoRompecabezas.tscn")
+var minijuego_mashear_scene = preload("res://scenes/minigames/mashear_boton/MinijuegoMashearBoton.tscn")
+var minijuego_osu_scene = preload("res://scenes/minigames/osu_killer/MinijuegoOsuKiller.tscn")
+
+var cinematica_calle_scene = preload("res://scenes/cinematics/CinematicaCalle.tscn")
+var cinematica_cuarto_scene: PackedScene = preload("res://scenes/cinematics/CinematicaCuarto.tscn")
+var cinematica_activa: Node = null
+
+# Segundos que corre la cinemática del minijuego 2 antes de que aparezca el minijuego (fade-in).
+const ESPERA_CINEMATICA_PESO_SILENCIO: float = 3.0
+# Segundos de cinemática de fondo antes de que aparezca "El Nudo en la Red" (Romina).
+const ESPERA_CINEMATICA_NUDO_RED: float = 3.0
+const FONDO_TRAS_PESO_SILENCIO: String = "res://assets/backgrounds/room.png"
 
 const MenuBackdrop = preload("res://scripts/ui/menu_backdrop.gd")
 const UI = preload("res://scripts/ui/ui_style.gd")
 const Click = preload("res://scripts/ui/ui_click.gd")
 const MusicManager = preload("res://scripts/music_manager.gd")
 const UserSettings = preload("res://scripts/ui/user_settings.gd")
+const GaelOverlay = preload("res://scripts/gael_overlay.gd")
+
+# Gael_19 asomándose por la izquierda cuando se chatea con él (Romina). Vive dentro del layout
+# de Dialogic (que se recrea en cada partida), así que se vuelve a crear cuando hace falta.
+var gael: GaelOverlay = null
 
 # Música de fondo (menú, tema de cada historia, minijuegos), con fundidos y bucle con pausa.
 var music: MusicManager = null
@@ -88,6 +105,7 @@ func _ready() -> void:
 	music = MusicManager.new()
 	add_child(music)
 	Dialogic.signal_event.connect(_on_dialogic_signal)
+	Dialogic.Text.about_to_show_text.connect(_on_texto_a_mostrar)
 	show_main_menu()
 
 
@@ -99,6 +117,9 @@ func show_main_menu() -> void:
 	game_started = false
 	_ocultar_estatica()
 	_cerrar_historial(false)
+	if gael != null and is_instance_valid(gael):
+		gael.ocultar_ya()
+	gael = null
 
 	# skip_ending = true: sin el timeline de cierre de Dialogic, que crearía un layout nuevo
 	# (con el fondo y el botón de historial) justo encima del menú.
@@ -117,6 +138,7 @@ func show_main_menu() -> void:
 		Dialogic.current_state_info["portraits"] = {}
 	if habia_timeline:
 		Dialogic.end_timeline(true)
+	Dialogic.paused = false   # por si se salió con Dialogic en pausa (minijuego, historial...)
 
 	if is_instance_valid(layout):
 		(layout as Node).queue_free()
@@ -130,6 +152,7 @@ func show_main_menu() -> void:
 	if minijuego_activo:
 		minijuego_activo.queue_free()
 		minijuego_activo = null
+	_liberar_cinematica()
 
 	if current_menu:
 		current_menu.queue_free()
@@ -349,11 +372,10 @@ func _on_dialogic_signal(signal_name: String) -> void:
 			Dialogic.paused = true
 			await _terminar_historia_y_volver_al_menu()
 
-		# ── Minijuego 2 placeholder (aún no implementado) ──
+		# ── Capítulo 1 de Darwin: minijuego 2 (El Peso del Silencio) ──
 		"trigger_minijuego_peso_silencio":
-			# TODO: instanciar MinijuegoPesoSilencio cuando esté listo.
-			# Por ahora simplemente continúa el timeline.
-			print("[Minijuego] 'El Peso del Silencio' aún no implementado — continuando.")
+			Dialogic.paused = true
+			_iniciar_minijuego_peso_silencio()
 
 		# ── Capítulo 1 de Romina: minijuego 1 (Rompecabezas) ──
 		"trigger_minijuego_rompecabezas":
@@ -364,11 +386,10 @@ func _on_dialogic_signal(signal_name: String) -> void:
 		"romina_estatica":
 			_reproducir_estatica()
 
-		# ── Minijuego 2 de Romina placeholder (aún no implementado) ──
+		# ── Capítulo 1 de Romina: minijuego 2 (El Nudo en la Red) ──
 		"trigger_minijuego_nudo_red":
-			# TODO: instanciar MinijuegoNudoRed cuando esté listo (con RETRY al fallar).
-			# Por ahora simplemente continúa el timeline.
-			print("[Minijuego] 'El Nudo en la Red' aún no implementado — continuando.")
+			Dialogic.paused = true
+			_iniciar_minijuego_nudo_red()
 
 
 # ──────────────────────────────────────────────
@@ -398,6 +419,8 @@ func _on_minijuego_completado() -> void:
 	# Fade a negro para la transición de vuelta a la novela visual; vuelve el tema del personaje
 	music.play_track(get_current_story())
 	await fade_to_black()
+	_liberar_cinematica()
+	_mostrar_layout_dialogic(true)
 
 	# Reanudar el timeline de Dialogic donde quedó pausado
 	Dialogic.paused = false
@@ -418,6 +441,117 @@ func _iniciar_minijuego_rompecabezas() -> void:
 	minijuego_activo.completado.connect(_on_minijuego_completado)
 
 	await fade_from_black()
+
+
+# ──────────────────────────────────────────────
+# MINIJUEGO 2 DE DARWIN — EL PESO DEL SILENCIO
+# ──────────────────────────────────────────────
+
+## Fundido a negro → cinemática de Darwin caminando → a los 3 s entra el minijuego con fade-in
+## sobre un fondo semitransparente (la cinemática sigue detrás, sombreada). Se oculta la caja
+## de diálogo mientras dura.
+func _iniciar_minijuego_peso_silencio() -> void:
+	music.play_track("minijuego2")
+	await fade_to_black()
+	_mostrar_layout_dialogic(false)
+	# Con la pantalla en negro (y luego tapado por la cinemática) se cambia ya el fondo al de la
+	# habitación, sin transición. Cuando el timeline pida el mismo fondo no hace nada, así que al
+	# volver no se ve ningún cambio.
+	Dialogic.Backgrounds.update_background("", FONDO_TRAS_PESO_SILENCIO, 0.0)
+	_liberar_cinematica()
+	cinematica_activa = cinematica_calle_scene.instantiate()
+	add_child(cinematica_activa)
+	await fade_from_black()
+
+	var juego: Node = minijuego_mashear_scene.instantiate()
+	juego.set("espera_inicial", ESPERA_CINEMATICA_PESO_SILENCIO)
+	minijuego_activo = juego
+	add_child(juego)
+	juego.connect("completado", _on_minijuego_completado)
+	# Darwin se enfurece (sprite Rage + vibración) mientras el marcador está fuera de la zona.
+	if cinematica_activa != null and cinematica_activa.has_method("set_furia"):
+		juego.connect("fuera_de_zona_cambiado", Callable(cinematica_activa, "set_furia"))
+
+
+## Fundido a negro → escena de fondo (por ahora la del propio timeline; ahí irá la cinemática)
+## → a los 3 s entra el minijuego con fade-in → 3 s de instrucción → empieza. Al ganar, fundido a
+## negro y vuelve el diálogo (lo hace _on_minijuego_completado).
+func _iniciar_minijuego_nudo_red() -> void:
+	music.play_track("minijuego2")
+	await fade_to_black()
+	_mostrar_layout_dialogic(false)
+	_liberar_cinematica()
+	cinematica_activa = cinematica_cuarto_scene.instantiate()
+	add_child(cinematica_activa)
+	await fade_from_black()
+
+	var juego: Node = minijuego_osu_scene.instantiate()
+	juego.set("espera_inicial", ESPERA_CINEMATICA_NUDO_RED)
+	minijuego_activo = juego
+	add_child(juego)
+	juego.connect("completado", _on_minijuego_completado)
+	# Cada fallo: Romina se quiebra 1 s y sale estatica a media intensidad.
+	if cinematica_activa != null and cinematica_activa.has_method("registrar_fallo"):
+		juego.connect("fallo_sumado", Callable(cinematica_activa, "registrar_fallo"))
+
+
+func _liberar_cinematica() -> void:
+	if cinematica_activa != null and is_instance_valid(cinematica_activa):
+		cinematica_activa.queue_free()
+	cinematica_activa = null
+
+
+## Gael aparece cuando él habla y se queda mientras sigue el chat con Romina; desaparece en
+## cuanto habla otro personaje que no sea ella o el narrador.
+func _on_texto_a_mostrar(info: Dictionary) -> void:
+	if get_current_story() != "romina":
+		return
+	var personaje: Variant = info.get("character", null)
+	var id: String = ""
+	if personaje is DialogicCharacter:
+		id = (personaje as DialogicCharacter).get_identifier()
+
+	if id == "gael_19":
+		_asegurar_gael()
+		if gael != null:
+			gael.mostrar(true)
+	elif gael != null and is_instance_valid(gael) and id != "romina":
+		# Narrador u otro personaje: se acabó el chat.
+		gael.mostrar(false)
+
+
+## Deja a Gael dentro del layout de Dialogic actual, justo antes de la caja de texto (sobre el
+## fondo y los retratos, bajo la caja).
+func _asegurar_gael() -> void:
+	if not get_tree().has_meta("dialogic_layout_node"):
+		return
+	var layout_var: Variant = get_tree().get_meta("dialogic_layout_node")
+	if not is_instance_valid(layout_var):
+		return
+	var layout: Node = layout_var as Node
+	var caja: Node = layout.find_child("*Textbox*", true, false)
+	if caja == null:
+		return
+	var padre: Node = caja.get_parent()
+	if gael != null and is_instance_valid(gael) and gael.get_parent() == padre:
+		return
+	gael = GaelOverlay.new()
+	padre.add_child(gael)
+	padre.move_child(gael, caja.get_index())
+
+
+## Muestra u oculta el layout de Dialogic (caja de texto, historial) sin destruirlo.
+func _mostrar_layout_dialogic(mostrar: bool) -> void:
+	if not get_tree().has_meta("dialogic_layout_node"):
+		return
+	var layout: Variant = get_tree().get_meta("dialogic_layout_node")
+	if not is_instance_valid(layout):
+		return
+	var nodo: Node = layout as Node
+	if nodo.has_method("set_visible"):
+		nodo.call("set_visible", mostrar)
+	if not mostrar and gael != null and is_instance_valid(gael):
+		gael.ocultar_ya()   # durante los minijuegos Gael no se ve
 
 
 # ──────────────────────────────────────────────

@@ -11,7 +11,7 @@
 "suffix": ""
 },
 &"default_portrait": "glad",
-&"description": "[PLACEHOLDER] Todos los retratos usan Romina Glad.png hasta tener los sprites de cada emocion.",
+&"description": "",
 &"display_name": "Romina",
 &"mirror": false,
 &"nicknames": [""],
@@ -19,7 +19,7 @@
 &"portraits": {
 "broken": {
 "export_overrides": {
-"image": "\"res://assets/characters/Romina/Romina Glad.png\""
+"image": "\"res://assets/characters/Romina/Romina Broken.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -39,7 +39,7 @@
 },
 "sad": {
 "export_overrides": {
-"image": "\"res://assets/characters/Romina/Romina Glad.png\""
+"image": "\"res://assets/characters/Romina/Romina Sad.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -49,7 +49,7 @@
 },
 "scared": {
 "export_overrides": {
-"image": "\"res://assets/characters/Romina/Romina Glad.png\""
+"image": "\"res://assets/characters/Romina/Romina Scared.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,
@@ -59,7 +59,7 @@
 },
 "uneasy": {
 "export_overrides": {
-"image": "\"res://assets/characters/Romina/Romina Glad.png\""
+"image": "\"res://assets/characters/Romina/Romina Uneasy.png\""
 },
 "ignore_char_scale": false,
 "mirror": false,

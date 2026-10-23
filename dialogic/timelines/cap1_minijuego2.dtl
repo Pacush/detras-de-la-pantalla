@@ -4,16 +4,17 @@
 # FASE 5: MINIJUEGO 2 + FINAL
 # ===========================
 
-# [NOTA DESARROLLADOR] Aquí irá "El Peso del Silencio":
-# Button masher — mantener barra de resistencia centrada
-# mientras caen palabras despectivas pixeladas.
-# Si falla → RETRY. Al ganar → continúa.
+# Minijuego "El Peso del Silencio" (machacar ESPACIO mientras caen palabras despectivas).
+# Si falla → se reinicia solo (RETRY). Al ganar → continúa.
+# Se juega sobre la cinemática (pendiente), con fondo semitransparente.
 [signal arg="trigger_minijuego_peso_silencio"]
 
 [wait time="0.8"]
 
 # --- FASE FINAL: DE REGRESO A CASA ---
-[background arg="res://assets/backgrounds/room.png" fade="1.0" transition="Push Left"]
+# El fondo de la habitación ya lo puso main.gd (tapado por la cinemática, sin transición visible).
+# Este evento queda como respaldo: si el fondo ya es el mismo, no hace nada.
+[background arg="res://assets/backgrounds/room.png" fade="0.0"]
 
 join darwin (broken) center [animation="Fade In" length="0.8"]
 [wait time="0.5"]

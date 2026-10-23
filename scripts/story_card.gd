@@ -28,6 +28,12 @@ const SHADOW_HOVER: int = 28
 
 var story_id: String = ""
 
+# Colores propios de cada personaje (por defecto, el lavanda de Darwin).
+var _border_normal: Color = BORDER_NORMAL
+var _border_hover: Color = BORDER_HOVER
+var _bg_hover: Color = BG_HOVER
+var _glow: Color = Color(0.70, 0.50, 1.0, 0.40)
+
 var _display_name: String = ""
 var _texture: Texture2D = null
 var _font: Font = null
@@ -44,7 +50,11 @@ var _interactive: bool = false
 var _locked: bool = false
 
 
-func setup(id: String, display_name: String, texture: Texture2D, font: Font) -> void:
+func setup(id: String, display_name: String, texture: Texture2D, font: Font, colors: Dictionary = {}) -> void:
+	_border_normal = colors.get("border_normal", BORDER_NORMAL)
+	_border_hover = colors.get("border_hover", BORDER_HOVER)
+	_bg_hover = colors.get("bg_hover", BG_HOVER)
+	_glow = colors.get("glow", _glow)
 	story_id = id
 	_display_name = display_name
 	_texture = texture
@@ -59,10 +69,10 @@ func _ready() -> void:
 
 	_style = StyleBoxFlat.new()
 	_style.bg_color = BG_NORMAL
-	_style.border_color = BORDER_NORMAL
+	_style.border_color = _border_normal
 	_style.set_border_width_all(4)
 	_style.set_corner_radius_all(14)
-	_style.shadow_color = Color(0.70, 0.50, 1.0, 0.40)
+	_style.shadow_color = _glow
 	_style.shadow_size = 0
 	add_theme_stylebox_override("panel", _style)
 
@@ -141,7 +151,7 @@ func play_selected() -> void:
 	_tween.tween_property(self, "scale", Vector2.ONE * 1.12, 0.35)
 	_tween.tween_property(self, "modulate", Color.WHITE, 0.2)
 	_tween.tween_property(_style, "border_color", Color.WHITE, 0.2)
-	_tween.tween_property(_style, "bg_color", BG_HOVER, 0.2)
+	_tween.tween_property(_style, "bg_color", _bg_hover, 0.2)
 	_tween.tween_property(_style, "shadow_size", SHADOW_HOVER * 2, 0.35)
 	_tween.tween_property(_sprite, "modulate", SPRITE_HOVER, 0.2)
 	_tween.tween_property(_name_label, "modulate", LABEL_HOVER, 0.2)
@@ -218,8 +228,8 @@ func _apply_state() -> void:
 	if _hovered:
 		target_scale = PRESS_SCALE if _pressing else HOVER_SCALE
 
-	var border: Color = BORDER_HOVER if _hovered else BORDER_NORMAL
-	var bg: Color = BG_HOVER if _hovered else BG_NORMAL
+	var border: Color = _border_hover if _hovered else _border_normal
+	var bg: Color = _bg_hover if _hovered else BG_NORMAL
 	var sprite_mod: Color = SPRITE_HOVER if _hovered else SPRITE_NORMAL
 	var label_mod: Color = LABEL_HOVER if _hovered else LABEL_NORMAL
 	var shadow: int = SHADOW_HOVER if _hovered else 0

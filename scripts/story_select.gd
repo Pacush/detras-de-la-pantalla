@@ -22,6 +22,13 @@ const STORIES: Array = [
 		"id": "romina",
 		"name": "Romina",
 		"sprite": "res://assets/characters/Romina/Romina Glad.png",
+		# Azul de su sprite / luz de celular: borde, brillo y fondo al pasar el mouse.
+		"colors": {
+			"border_normal": Color(0.22, 0.33, 0.55, 1.0),
+			"border_hover": Color(0.45, 0.68, 1.0, 1.0),
+			"bg_hover": Color(0.08, 0.12, 0.22, 1.0),
+			"glow": Color(0.30, 0.55, 1.0, 0.45),
+		},
 	},
 ]
 
@@ -83,7 +90,7 @@ func _build_ui() -> void:
 		var texture: Texture2D = load(story["sprite"]) as Texture2D
 		if texture == null:
 			push_warning("[StorySelect] No se pudo cargar el sprite: %s" % story["sprite"])
-		card.setup(story["id"], story["name"], texture, PIX_FONT)
+		card.setup(story["id"], story["name"], texture, PIX_FONT, story.get("colors", {}))
 		card.card_pressed.connect(_on_card_pressed)
 		card.hover_changed.connect(_on_card_hover_changed)
 		cards_row.add_child(card)

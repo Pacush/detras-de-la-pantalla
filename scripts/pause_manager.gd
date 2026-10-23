@@ -27,6 +27,7 @@ func _input(event: InputEvent) -> void:
 func pause() -> void:
 	is_paused = true
 	get_tree().paused = true
+	get_tree().call_group("music_manager", "set_ducked", true)   # música al 50% en la pausa
 	
 	# Crear CanvasLayer con nivel alto
 	pause_canvas_layer = CanvasLayer.new()
@@ -42,6 +43,7 @@ func pause() -> void:
 func unpause() -> void:
 	is_paused = false
 	get_tree().paused = false
+	get_tree().call_group("music_manager", "set_ducked", false)
 	
 	if pause_canvas_layer:
 		pause_canvas_layer.queue_free()
@@ -53,15 +55,15 @@ func unpause() -> void:
 func _on_go_to_main_menu() -> void:
 	unpause()
 	
-	# 1. Detenemos Dialogic para que borre los personajes y cuadros de diálogo en pantalla
-	Dialogic.paused = false
-	Dialogic.end_timeline()
-	
-	# 2. Le pedimos a la escena principal que vuelva a mostrar el MainMenu
+	# La escena principal limpia Dialogic por su cuenta (end_timeline con skip_ending). No se
+	# llama aquí a Dialogic.end_timeline() a secas: ejecuta el timeline de cierre, que crea un
+	# layout nuevo de pantalla completa encima del menú y se come todos los clics.
 	var main_scene = get_tree().current_scene
 	if main_scene and main_scene.has_method("show_main_menu"):
 		main_scene.show_main_menu()
 	else:
+		Dialogic.paused = false
+		Dialogic.end_timeline(true)
 		get_tree().change_scene_to_file("res://main.tscn")
 
 func get_input_state() -> void:

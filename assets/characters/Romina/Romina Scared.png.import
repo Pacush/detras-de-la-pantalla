@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1yx0oeay7qja"
-path="res://.godot/imported/room-romina - Copy.png-4ccd95e93f1bfa798ee686dbfa86fbbb.ctex"
+uid="uid://bv4haf3i01ytt"
+path="res://.godot/imported/Romina Scared.png-62e14c066a56442214b2004357e954bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/room-romina - Copy.png"
-dest_files=["res://.godot/imported/room-romina - Copy.png-4ccd95e93f1bfa798ee686dbfa86fbbb.ctex"]
+source_file="res://assets/characters/Romina/Romina Scared.png"
+dest_files=["res://.godot/imported/Romina Scared.png-62e14c066a56442214b2004357e954bc.ctex"]
 
 [params]
 

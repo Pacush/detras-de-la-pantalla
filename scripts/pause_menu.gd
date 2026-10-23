@@ -69,6 +69,8 @@ func _on_quit() -> void:
 
 func show_submenu(scene: PackedScene) -> void:
 	sidebar.hide()
+	# En Ajustes la música suena al 100% del volumen configurado, para poder calibrarlo bien.
+	get_tree().call_group("music_manager", "set_ducked", scene != settings_menu_scene)
 
 	if current_submenu:
 		current_submenu.queue_free()
@@ -84,4 +86,5 @@ func _on_submenu_back() -> void:
 	if current_submenu:
 		current_submenu.queue_free()
 		current_submenu = null
+	get_tree().call_group("music_manager", "set_ducked", true)
 	sidebar.show()

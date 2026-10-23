@@ -4,6 +4,8 @@ extends Node
 ## - play_track(id) cambia de canción con fundido cruzado; si ya suena esa, no hace nada.
 ## - Al terminar una canción espera LOOP_GAP segundos y la repite.
 ## - Sigue sonando con el juego pausado (menú de pausa).
+## - set_ducked(true) baja la música al 50% (se usa al pausar); va por su propio bus "Musica",
+##   así no choca con los fundidos entre canciones ni con el volumen principal de Ajustes.
 ## main.gd crea una instancia y es el único que la usa.
 
 const TRACKS: Dictionary = {
@@ -18,19 +20,25 @@ const FADE_TIME: float = 1.5
 const LOOP_GAP: float = 3.0      # segundos de silencio entre una vuelta y la siguiente
 const SILENT_DB: float = -60.0
 const MUSIC_DB: float = -3.0
+const BUS_NAME: String = "Musica"
+const DUCK_DB: float = -10.02     # 50% de volumen (amplitud)
+const DUCK_TIME: float = 0.3
 
 var _players: Array[AudioStreamPlayer] = []
 var _current: AudioStreamPlayer = null
 var _track_id: String = ""
 var _tweens: Dictionary = {}     # AudioStreamPlayer -> Tween
 var _gap_timer: Timer
+var _duck_tween: Tween = null
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_to_group("music_manager")
+	_ensure_bus()
 	for i: int in 2:
 		var p: AudioStreamPlayer = AudioStreamPlayer.new()
-		p.bus = &"Master"
+		p.bus = StringName(BUS_NAME)
 		p.volume_db = SILENT_DB
 		p.finished.connect(_on_player_finished.bind(p))
 		add_child(p)
@@ -41,6 +49,30 @@ func _ready() -> void:
 	_gap_timer.wait_time = LOOP_GAP
 	_gap_timer.timeout.connect(_on_gap_timeout)
 	add_child(_gap_timer)
+
+
+## Crea (si no existe) el bus de la música, que sale por Master.
+func _ensure_bus() -> void:
+	if AudioServer.get_bus_index(BUS_NAME) != -1:
+		return
+	AudioServer.add_bus()
+	var idx: int = AudioServer.bus_count - 1
+	AudioServer.set_bus_name(idx, BUS_NAME)
+	AudioServer.set_bus_send(idx, &"Master")
+
+
+## Baja la música al 50% (true) o la devuelve a su volumen ajustado (false), con fundido corto.
+func set_ducked(ducked: bool) -> void:
+	var idx: int = AudioServer.get_bus_index(BUS_NAME)
+	if idx == -1:
+		return
+	if _duck_tween != null and _duck_tween.is_valid():
+		_duck_tween.kill()
+	var desde: float = AudioServer.get_bus_volume_db(idx)
+	var hasta: float = DUCK_DB if ducked else 0.0
+	_duck_tween = create_tween()
+	_duck_tween.tween_method(
+		func(v: float) -> void: AudioServer.set_bus_volume_db(idx, v), desde, hasta, DUCK_TIME)
 
 
 ## Cambia a la canción `id` ("" = silencio). No reinicia si ya es la actual.
