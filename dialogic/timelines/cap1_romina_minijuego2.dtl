@@ -1,0 +1,46 @@
+[style name="style2 (custom)"]
+
+# ===========================
+# FASE 5: MINIJUEGO 2 + FINAL (compartido por ambas ramas)
+# ===========================
+
+# Ambas ramas llegan aquí con el cuarto a oscuras.
+[background arg="#050508ff" fade="1.5" transition="Simple Fade"]
+[wait time="1.0"]
+
+update romina (broken) center
+romina (broken): Tengo que borrarlo. Tengo que bloquearlo. Ahora mismo.
+
+[wait time="0.5"]
+Borras mensajes. Bloqueas cuentas. Cambias la privacidad de tu perfil.
+
+[wait time="0.4"]
+Pero por cada contacto que bloqueas, se abren tres chats nuevos.
+Cada uno lleva a servidores y a cuentas que ni siquiera conoces.
+
+[wait time="0.6"]
+# Minijuego "El Nudo en la Red" (estilo osu!): bloquear nodos a tiempo mientras se abren más.
+# Representa la imposibilidad de borrar algo una vez subido a internet.
+# Si falla (5 fallos) → se reinicia solo (RETRY). Al ganar → continúa.
+# Se juega sobre una cinemática de fondo (pendiente), con fondo semitransparente.
+[signal arg="trigger_minijuego_nudo_red"]
+
+[wait time="0.8"]
+
+# --- FINAL ---
+Bloqueaste la cuenta, pero la foto... la amenaza ya no están bajo tu control.
+
+[wait time="1.0"]
+Apagas la pantalla, pero el miedo a lo que pasará mañana no te deja cerrar los ojos.
+No puedes convencerte de que esa no eres tú. No sabes quién eres.
+
+[wait time="0.8"]
+update romina (broken) center
+romina (broken): ...
+
+[wait time="1.0"]
+leave romina [animation="Fade Out" length="1.0"]
+[wait time="1.0"]
+
+# Pantalla a negro. Fin del Capítulo 1 de Romina.
+[signal arg="romina_cap1_fin"]

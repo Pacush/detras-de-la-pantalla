@@ -1,0 +1,44 @@
+[style name="style2 (custom)"]
+
+# ===========================
+# RAMA A: ENVIAR LA IMAGEN POR VALIDAR LA RELACIÓN
+# ===========================
+
+update romina (uneasy) center
+romina (uneasy): ...Si no lo hago, va a pensar que no confío en él.
+
+[wait time="0.5"]
+Escribes un "está bien".
+Eliges la foto. Tu pulgar se queda quieto sobre el botón de enviar.
+
+[wait time="0.8"]
+Y lo presionas.
+
+[wait time="0.8"]
+Envías la fotografía.
+La pantalla queda en blanco unos segundos.
+
+[wait time="0.4"]
+# Consecuencia visual: la interfaz del celular se distorsiona con estática.
+[signal arg="romina_estatica"]
+[wait time="1.4"]
+
+update romina (scared) center
+gael_19 (default): Excelente. Ahora si le dices a alguien de lo nuestro, todos en tu escuela van a tener esta imagen.
+
+[wait time="0.8"]
+romina (scared): ...
+
+[wait time="0.6"]
+No hay nada que responder.
+Hace un minuto era un secreto compartido.
+Ahora es una cadena.
+
+[wait time="0.5"]
+update romina (broken) center
+
+romina (broken): ...Qué hice.
+
+[wait time="0.5"]
+
+jump cap1_romina_minijuego2/

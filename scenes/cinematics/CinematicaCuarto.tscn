@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bqosdfyjvs3gu"]
+
+[ext_resource type="Script" uid="uid://dqc623ekjn6a6" path="res://scenes/cinematics/CinematicaCuarto.gd" id="1_cuarto"]
+
+[node name="CinematicaCuarto" type="CanvasLayer" unique_id=490544024]
+layer = 80
+script = ExtResource("1_cuarto")

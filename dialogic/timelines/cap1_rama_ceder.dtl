@@ -1,0 +1,56 @@
+[style name="style2 (custom)"]
+
+# ===========================
+# RAMA A: CEDER POR MIEDO
+# ===========================
+
+Darwin (resigned): ...Aquí está.
+
+[wait time="0.3"]
+Darwin saca el billete con la mano temblorosa.
+Una mano que quisiera desaparecer junto con el resto de su cuerpo.
+
+[wait time="0.4"]
+acosador1_por_definir (mocking): Eso es.
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): ¿Ves? Sabía que podías ser razonable.
+
+[wait time="0.2"]
+update darwin (broken) center
+Se ríen.
+Un empujón en el hombro, como si fuera un chiste.
+
+[wait time="0.4"]
+leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador2_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
+[wait time="0.6"]
+
+Darwin (broken): ...
+Darwin (broken): ...Bien.
+
+[wait time="0.4"]
+Te quedaste sin comer.
+Pero por hoy estás a salvo.
+Hasta mañana.
+
+[wait time="0.5"]
+[signal arg="pasillo_desaturar"]
+
+[wait time="0.4"]
+Darwin (sad): ...¿Por qué nadie dice nada?
+
+[wait time="0.3"]
+Los demás alumnos en el pasillo vieron todo.
+Ninguno se movió.
+Ninguno dijo nada.
+La indiferencia tiene una forma muy particular de doler.
+
+[wait time="0.5"]
+update darwin (sad) center
+
+Darwin (sad): ...
+[wait time="0.3"]
+
+jump cap1_minijuego2/

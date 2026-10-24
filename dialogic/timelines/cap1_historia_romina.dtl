@@ -1,0 +1,160 @@
+[style name="style2 (custom)"]
+
+# ============================================================
+# CAPÍTULO 1 (ROMINA): LA FOTO QUE NO SE BORRA
+# Historia de Romina — Grooming, falsas relaciones y pérdida de intimidad
+# ============================================================
+
+# --- FASE 1: TARDE EN EL CUARTO ---
+# [PLACEHOLDER FONDO] Habitación de Romina por la tarde. Usar room.jpg temporal.
+[background arg="res://assets/backgrounds/room-romina.png" fade="1.0" wait="true"]
+
+[wait time="0.5"]
+La tarde se apaga despacio en la habitación de Romina.
+La luz naranja se arrastra por el suelo y nadie enciende ninguna lámpara.
+
+[wait time="0.8"]
+join romina (glad) center [animation="Fade In" length="0.8"]
+[wait time="0.5"]
+
+romina (glad): ...
+
+[wait time="0.4"]
+Romina está sentada en la cama, mirando el techo.
+La tarea ya está terminada. La casa está en silencio.
+
+[wait time="0.8"]
+Bzzz.
+[wait time="0.5"]
+Bzzz. Bzzz.
+
+[wait time="0.4"]
+romina (glad): ...¿Otra vez el grupo del salón?
+
+[wait time="0.4"]
+El celular vibra sobre la mesa de noche sin parar.
+Romina se levanta y camina hacia él.
+
+[wait time="0.5"]
+romina (glad): Cinco notificaciones y ninguna es para mí.
+
+[wait time="0.6"]
+Todos en el grupo suben fotos nuevas.
+Todos parecen tener a alguien que les responda.
+
+[wait time="0.5"]
+update romina (sad) center
+
+romina (sad): ...Quizá si cambio mi foto de perfil, alguien se fije.
+
+[wait time="0.5"]
+Abres la aplicación. Eliges una foto tuya.
+Pero se ve rota, hecha pedazos. Tienes que armarla antes de subirla.
+
+[wait time="0.4"]
+update romina (glad) center
+
+# --- FASE 2: MINIJUEGO 1 — "ROMPECABEZAS" ---
+# Romina toma el celular → lanza el Minijuego 1.
+# El timeline queda pausado hasta que el jugador complete el minijuego.
+[signal arg="trigger_minijuego_rompecabezas"]
+
+# ── Continúa al volver del minijuego ──
+[wait time="0.3"]
+Armaste la foto. Quedó muy bien.
+Esperas que tus compañeros de la escuela le den 'me gusta'.
+
+[wait time="0.6"]
+Subes la foto.
+
+[wait time="0.8"]
+Un me gusta. Luego otro.
+Ninguno viene de tu escuela.
+
+[wait time="0.6"]
+update romina (sad) center
+
+romina (sad): ...Bueno. Al menos alguien la vio.
+
+# --- FASE 3: TRANSICIÓN AL CONFLICTO (INTERFAZ CHAT) ---
+[wait time="1.0"]
+Bzzz.
+
+[wait time="0.4"]
+Un mensaje nuevo. De alguien que no conoces.
+
+[wait time="0.6"]
+gael_19 (default): Hola Romina, vi tu foto. Te ves increíble. Se nota que eres mucho más madura que las niñas de tu edad.
+
+[wait time="0.5"]
+Su perfil no tiene foto. Solo un nombre, un guion bajo y un número.
+Pero nadie te había dicho algo así antes.
+
+[wait time="0.4"]
+update romina (glad) center
+
+romina (glad): ...¿Gracias? ¿Te conozco?
+
+[wait time="0.3"]
+gael_19 (default): Todavía no. Pero me gustaría.
+
+# Pasan los días en texto rápido (fundido a negro, igual que los saltos de tiempo de Darwin).
+[wait time="1.0"]
+[background arg="#000000ff" fade="1.0" transition="Simple Fade"]
+Pasan los días.
+Los mensajes llegan en la mañana, en el recreo, en la noche.
+
+[wait time="0.6"]
+[background arg="res://assets/backgrounds/room-romina.png" fade="1.0" transition="Simple Fade" wait="true"]
+[wait time="0.4"]
+gael_19 (default): ¿Cómo te fue hoy?
+
+[wait time="0.2"]
+romina (glad): Igual que siempre. Nadie se fija en mí.
+
+[wait time="0.2"]
+gael_19 (default): Yo sí me fijo. Siempre.
+
+[wait time="0.4"]
+gael_19 (default): Tus papás no te entienden, ¿verdad? Yo sí.
+
+[wait time="0.3"]
+update romina (sad) center
+
+romina (sad): ...Eres el único que me escucha.
+
+[wait time="0.6"]
+Romina encuentra en Gael a la persona que la escucha cuando se siente sola.
+Sin darte cuenta, se vuelve lo primero que buscas al despertar.
+Y lo último antes de dormir.
+
+# --- EL GIRO ---
+[wait time="1.0"]
+Una noche, el celular vibra más tarde que de costumbre.
+
+[wait time="0.5"]
+update romina (uneasy) center
+
+gael_19 (default): Romina, si de verdad confías en mí como dices, mándame una foto más personal. Algo solo para mí. Prometo que la borro de inmediato.
+
+[wait time="0.8"]
+romina (uneasy): ...
+
+[wait time="0.6"]
+Siento que está mal...
+Pero él es el único que me pone atención y me hace sentir especial.
+
+[wait time="0.6"]
+Los tres puntitos aparecen. Desaparecen. Aparecen otra vez.
+
+[wait time="0.5"]
+update romina (scared) center
+
+# --- FASE 4: ÁRBOL DE DECISIÓN ---
+# Cada opción salta a su propio timeline separado (contenido indentado
+# con tab debajo de cada línea "- "). Esto garantiza que los dos caminos
+# nunca se ejecuten juntos.
+- Enviar la imagen.
+	jump cap1_romina_rama_enviar/
+- Negarse a enviarla.
+	jump cap1_romina_rama_negarse/

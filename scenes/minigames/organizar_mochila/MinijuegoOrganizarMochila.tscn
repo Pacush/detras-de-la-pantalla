@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bcqmendqwhrm3"]
+
+[ext_resource type="Script" uid="uid://bybiinshswlpy" path="res://scenes/minigames/organizar_mochila/MinijuegoOrganizarMochila.gd" id="1_mochila"]
+
+[node name="MinijuegoOrganizarMochila" type="CanvasLayer" unique_id=345736165]
+layer = 128
+script = ExtResource("1_mochila")

@@ -1,0 +1,17 @@
+[style name="style2 (custom)"]
+
+# ============================================================
+# TIMELINE DE ENTRADA — HISTORIA DE ROMINA
+# Equivalente a timeline.dtl (Darwin). Lo inicia main.gd.
+# ============================================================
+
+# Pantalla de título / intro
+[background arg="#000000ff" fade="0.0"]
+[wait time="1.0"]
+
+Detrás de la pantalla.
+
+[wait time="1.2"]
+
+# Ir al Capítulo 1 de Romina
+jump cap1_historia_romina/

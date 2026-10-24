@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cgavgg360vf76"]
+
+[ext_resource type="Script" uid="uid://c4y5avcwyyx7m" path="res://scenes/minigames/rompecabezas/MinijuegoRompecabezas.gd" id="1_rompe"]
+
+[node name="MinijuegoRompecabezas" type="CanvasLayer" unique_id=1363865592]
+layer = 90
+script = ExtResource("1_rompe")

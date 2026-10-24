@@ -1,0 +1,60 @@
+[style name="style2 (custom)"]
+
+# ===========================
+# RAMA B: INTENTAR NEGARSE
+# ===========================
+
+update darwin (scared) center
+Darwin (scared): Yo... no tengo dinero.
+
+[wait time="0.3"]
+acosador1_por_definir (threatening): ¿Cómo dijiste?
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): Qué gracioso.
+
+[wait time="0.3"]
+update darwin (broken) center
+
+De un tirón le quitan la mochila de los hombros.
+Las cosas caen al suelo. Los cuadernos, los lápices, todo lo que tomó tanto tiempo acomodar esta mañana.
+
+[wait time="0.5"]
+acosador3_por_definir (smirking): Ah, mira, cuántos cuadernitos.
+
+[wait time="0.2"]
+acosador1_por_definir (mocking): ¿Para qué los necesitas si de todas formas no estudias?
+
+[wait time="0.3"]
+Los arrancan. Los rompen.
+Frente a todos.
+Nadie interviene.
+
+[wait time="0.5"]
+Darwin (broken): ...
+
+[wait time="0.4"]
+leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador2_por_definir [animation="Slide To Right" length="0.3"]
+leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
+[wait time="0.6"]
+
+Darwin se agacha a recoger lo que puede.
+Las hojas están arrugadas. Algunas, rotas por la mitad.
+
+[wait time="0.4"]
+Darwin (broken): ...
+Darwin (broken): Está bien.
+Darwin (broken): No necesitaba esos cuadernos.
+
+[wait time="0.4"]
+No era verdad.
+Los necesitaba.
+Pero decirlo no iba a devolverlos.
+
+[wait time="0.5"]
+[signal arg="darwin_postura_encorvada"]
+
+[wait time="0.3"]
+
+jump cap1_minijuego2/

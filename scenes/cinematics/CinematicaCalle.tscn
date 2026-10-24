@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c22f08f412p6h"]
+
+[ext_resource type="Script" uid="uid://bukad0p34qdeq" path="res://scenes/cinematics/CinematicaCalle.gd" id="1_calle"]
+
+[node name="CinematicaCalle" type="CanvasLayer" unique_id=329571881]
+layer = 80
+script = ExtResource("1_calle")

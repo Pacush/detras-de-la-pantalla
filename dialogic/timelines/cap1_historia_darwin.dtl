@@ -1,0 +1,139 @@
+[style name="style2 (custom)"]
+
+# ============================================================
+# CAPÍTULO 1: EL PESO DE UN DÍA ORDINARIO
+# Historia de Darwin — Acoso escolar y desatención familiar
+# ============================================================
+
+# --- FASE 1: MAÑANA EN EL CUARTO ---
+# [PLACEHOLDER FONDO] Cuarto de Darwin. Usar room.jpg temporal.
+[background arg="res://assets/backgrounds/room.png" fade="1.0"]
+
+[wait time="0.5"]
+Darwin (poker): ...
+[wait time="0.5"]
+
+Hoy es martes.
+No hay nada que distinga este martes de cualquier otro.
+Ni uno solo.
+
+[wait time="0.8"]
+join darwin (poker) center [animation="Fade In" length="0.8"]
+[wait time="0.5"]
+
+Darwin (poker): Mochila... cuadernos... lápices...
+Darwin (poker): Siempre me olvido del sacapuntas.
+
+[wait time="0.4"]
+update darwin (sad) center
+
+Darwin (sad): ...¿Hay alguien despierto?
+
+[wait time="1.0"]
+El cuarto de al lado no tiene sonido.
+Papá sigue dormido.
+Mamá se fue temprano a trabajar, como todos los días.
+
+[wait time="0.5"]
+Darwin (sad): ...Normal.
+
+[wait time="0.6"]
+No hay nadie para despedirse.
+Nunca hay nadie.
+
+[wait time="0.5"]
+Darwin (poker): ...
+Darwin (poker): Aún así, debo de organizar mi mochila
+
+[wait time="0.4"]
+update darwin (poker) center
+
+# Darwin se acerca a la mochila → lanza Minijuego 1.
+# El timeline queda pausado hasta que el jugador complete el minijuego.
+[signal arg="trigger_minijuego_mochila"]
+
+# ── Continúa al volver del minijuego ──
+[wait time="0.3"]
+Todo listo para la escuela.
+
+Darwin (poker): ...Está bien.
+Darwin (poker): Que tengas buen día, nadie.
+
+[wait time="0.3"]
+leave darwin [animation="Fade Out" length="0.6"]
+[wait time="0.8"]
+
+# --- TRANSICIÓN: CAMINO A LA ESCUELA ---
+[wait time="0.5"]
+La distancia entre la casa y la escuela es de doce minutos caminando.
+Doce minutos en los que nadie lo espera del otro lado.
+Ni de este tampoco.
+
+[wait time="0.8"]
+
+# --- FASE 3: PASILLO DE LA SECUNDARIA ---
+[background arg="res://assets/backgrounds/school.png" fade="1.0" transition="Push Right"]
+[wait time="0.5"]
+
+join darwin (poker) center [animation="Slide From Right"]
+[wait time="0.4"]
+
+Darwin (poker): Casillero... número 47.
+
+[wait time="0.3"]
+Darwin (poker): ...
+
+[wait time="0.5"]
+La sensación llega primero.
+Ese peso en el pecho.
+Ese zumbido sordo detrás de los oídos.
+
+[wait time="0.5"]
+
+join acosador1_por_definir (threatening) rightmost [animation="Slide From Right" length="0.3"]
+[wait time="0.2"]
+join acosador2_por_definir (default) right [animation="Fade In" length="0.2"]
+[wait time="0.1"]
+join acosador3_por_definir (smirking) left [animation="Slide From Left" length="0.3"]
+[wait time="0.4"]
+
+update darwin (scared) center
+
+acosador1_por_definir (threatening): Darwin.
+
+[wait time="0.3"]
+acosador1_por_definir (threatening): Qué bueno que llegaste.
+acosador1_por_definir (threatening): Necesitamos la tarea de matemáticas.
+
+[wait time="0.2"]
+acosador2_por_definir (laughing): Y los cien pesos para la salida.
+
+[wait time="0.1"]
+acosador3_por_definir (smirking): Ya sabes qué pasa si no los traes.
+
+[wait time="0.5"]
+update darwin (scared) center
+
+Darwin no responde. Los mira.
+Calcula.
+
+[wait time="0.4"]
+Si les digo que no...
+...volverán a encerrarme en el baño.
+Si les doy el dinero...
+...no tendré para comer hoy.
+
+[wait time="0.3"]
+A nadie en mi casa le importa de todos modos.
+
+[wait time="0.5"]
+update darwin (resigned) center
+
+# --- FASE 4: ÁRBOL DE DECISIÓN ---
+# Cada opción salta a su propio timeline separado (contenido indentado
+# con tab debajo de cada línea "- "). Esto garantiza que los dos caminos
+# nunca se ejecuten juntos.
+- Entregarles el dinero.
+	jump cap1_rama_ceder/
+- Negarse.
+	jump cap1_rama_negarse/

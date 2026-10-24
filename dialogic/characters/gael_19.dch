@@ -1,0 +1,32 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(0.35, 0.82, 0.72, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "style2 (custom)",
+"suffix": ""
+},
+&"default_portrait": "default",
+&"description": "Usuario de chat sin foto real. Nunca se muestra en pantalla (no se hace join), solo aparece su nombre en el cuadro de texto. El retrato es un placeholder por si algun dia se necesita.",
+&"display_name": "Gael_19",
+&"mirror": false,
+&"nicknames": [""],
+&"offset": Vector2(0, 200),
+&"portraits": {
+"default": {
+"export_overrides": {
+"image": "\"res://assets/characters/Generic Bad Man/Generic Bad Man.png\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(0, 0),
+"scale": 1,
+"scene": ""
+}
+},
+&"scale": 1.0
+}
