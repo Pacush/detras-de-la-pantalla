@@ -19,9 +19,16 @@
 join darwin (broken) center [animation="Fade In" length="0.8"]
 [wait time="0.5"]
 
-La habitación huele a cerrado.
-La luz del pasillo está apagada.
-Nadie encendió nada.
+Como siempre, llegué a casa caminando.
+El mismo recorrido.
+Pensando en lo que había pasado esa tarde.
+Siempre pienso eso todos los días.
+
+[wait time="0.4"]
+Si algo hubiera sido diferente.
+Si hubiera hecho algo diferente.
+No importa.
+El "hubiera" no existe.
 
 [wait time="0.5"]
 Darwin (broken): ...¿Mamá?
@@ -37,32 +44,40 @@ Silencio.
 [wait time="0.4"]
 
 update darwin (sad) center
-Darwin se sienta en el borde de la cama.
-No llora.
-Ya aprendió que llorar no llama a nadie.
+Me imagino que están ocupados.
+No los molestaré.
+Comeré mi almuerzo y subiré a mi cuarto a hacer la tarea.
+La misma rutina.
+...
 
 [wait time="0.5"]
 [background arg="#000000ff" fade="1.0" transition="Simple Fade"]
 Darwin (sad): ...
 [wait time="0.3"]
 
-Llegas a tu casa.
-Tu cuarto está a oscuras.
-Nadie pregunta cómo te fue.
-
-[wait time="0.6"]
-El silencio de la casa duele más que los golpes de la escuela.
+Creo que hoy no tengo tanta hambre.
+Subiré a mi cuarto.
+...
+Quiero estar en mi cuarto.
+Estoy seguro ahí dentro.
 
 [wait time="0.8"]
 update darwin (broken) center
 Darwin (broken): ...
 
 [wait time="0.6"]
-Mañana va a ser igual.
-Pero eso es un problema de mañana.
+Mañana será igual.
+O bueno, a eso estoy acostumbrado.
+¿Por qué sería diferente?
+...
+
+[wait time="0.4"]
+Quiero dormir.
+Necesito dormir.
+...
 
 [wait time="0.5"]
-Darwin (broken): ...Que así sea.
+Darwin (broken): ...Qué asco.
 
 [wait time="0.8"]
 leave darwin [animation="Fade Out" length="1.0"]

@@ -7,19 +7,27 @@
 Darwin (resigned): ...Aquí está.
 
 [wait time="0.3"]
-Darwin saca el billete con la mano temblorosa.
-Una mano que quisiera desaparecer junto con el resto de su cuerpo.
+Sacándolos de mi bolsillo trasero, tenía los billetes que iba a usar para desayunar.
+Mi padre siempre me da un par, tengo que racionarlos para la semana.
+¿Los de hoy? No importa, ya no están.
 
 [wait time="0.4"]
-acosador1_por_definir (mocking): Eso es.
+acosador1_por_definir (mocking): Eso es. Trae para acá.
 
 [wait time="0.2"]
 acosador2_por_definir (laughing): ¿Ves? Sabía que podías ser razonable.
 
 [wait time="0.2"]
+acosador3_por_definir (smirking): Siempre es tan fácil. Eres un buen chico Darwin, sabes lo que te conviene.
+
+[wait time="0.3"]
 update darwin (broken) center
 Se ríen.
 Un empujón en el hombro, como si fuera un chiste.
+Un chiste para ellos, eso es lo que soy.
+No quiero ser un chiste.
+Y aun así, no puedo dejar de seguir sus órdenes.
+Qué asco.
 
 [wait time="0.4"]
 leave acosador1_por_definir [animation="Slide To Right" length="0.3"]
@@ -28,24 +36,40 @@ leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
 [wait time="0.6"]
 
 Darwin (broken): ...
-Darwin (broken): ...Bien.
+Darwin (broken): Ahora... Lo que sigue.
 
 [wait time="0.4"]
-Te quedaste sin comer.
-Pero por hoy estás a salvo.
-Hasta mañana.
+Quedarme sin comer.
+No importa.
+Estoy a salvo de esos bravucones por hoy.
+No pasó a mayores.
+Soy un buen chico...
+...
+Soy un chiste.
 
 [wait time="0.5"]
 [signal arg="pasillo_desaturar"]
 
 [wait time="0.4"]
-Darwin (sad): ...¿Por qué nadie dice nada?
+Darwin (sad): ¿Por qué nadie dice nada?
+Darwin (sad): ...
+Darwin (sad): ¿Por qué yo no digo nada?
+Darwin (sad): ...
+Darwin (sad): ¿Por qué...?
 
-[wait time="0.3"]
+[wait time="0.4"]
 Los demás alumnos en el pasillo vieron todo.
 Ninguno se movió.
 Ninguno dijo nada.
-La indiferencia tiene una forma muy particular de doler.
+Estamos acostumbrados a esto.
+
+[wait time="0.4"]
+Nadie más quiere ser el chiste.
+Nadie quiere ser como yo.
+Nadie.
+No los culpo.
+...
+Ni siquiera eso soy capaz de hacer.
 
 [wait time="0.5"]
 update darwin (sad) center

@@ -14,39 +14,40 @@ Darwin (poker): ...
 [wait time="0.5"]
 
 Hoy es martes.
-No hay nada que distinga este martes de cualquier otro.
-Ni uno solo.
+Un día más, como cualquier otro.
+Misma rutina.
 
 [wait time="0.8"]
 join darwin (poker) center [animation="Fade In" length="0.8"]
 [wait time="0.5"]
 
-Darwin (poker): Mochila... cuadernos... lápices...
+Darwin (poker): Veamos... cuadernos... lápices...
 Darwin (poker): Siempre me olvido del sacapuntas.
 
 [wait time="0.4"]
 update darwin (sad) center
 
-Darwin (sad): ...¿Hay alguien despierto?
-
-[wait time="1.0"]
-El cuarto de al lado no tiene sonido.
+El cuarto de al lado tiene un leve ronquido como ruido de fondo.
 Papá sigue dormido.
 Mamá se fue temprano a trabajar, como todos los días.
 
 [wait time="0.5"]
-Darwin (sad): ...Normal.
+Darwin (sad): Mi padre todavía no despierta... No lo molestaré.
 
 [wait time="0.6"]
+Darwin (sad): ...Hora de irme.
+
+[wait time="0.8"]
 No hay nadie para despedirse.
+No pasa nada.
 Nunca hay nadie.
+Estoy acostumbrado.
 
 [wait time="0.5"]
-Darwin (poker): ...
-Darwin (poker): Aún así, debo de organizar mi mochila
+update darwin (poker) center
+Darwin (poker): Casi lo olvido. La mochila no se va a organizar sola...
 
 [wait time="0.4"]
-update darwin (poker) center
 
 # Darwin se acerca a la mochila → lanza Minijuego 1.
 # El timeline queda pausado hasta que el jugador complete el minijuego.
@@ -54,39 +55,53 @@ update darwin (poker) center
 
 # ── Continúa al volver del minijuego ──
 [wait time="0.3"]
-Todo listo para la escuela.
+Otro día.
+Ir a la escuela.
+Es mi rutina diaria.
+Debo cumplirla.
 
-Darwin (poker): ...Está bien.
-Darwin (poker): Que tengas buen día, nadie.
+[wait time="0.4"]
+Darwin (poker): Está bien, todo listo...
+Darwin (poker): Adiós padre... Regreso a la misma hora de siempre...
 
 [wait time="0.3"]
 leave darwin [animation="Fade Out" length="0.6"]
 [wait time="0.8"]
 
 # --- TRANSICIÓN: CAMINO A LA ESCUELA ---
+# La misma cinemática de la calle del minijuego 2, pero con Darwin caminando (inexpresivo)
+# y la narración de Dialogic por encima. main.gd pone la cinemática y reanuda el timeline.
+[signal arg="camino_escuela_inicio"]
 [wait time="0.5"]
-La distancia entre la casa y la escuela es de doce minutos caminando.
-Doce minutos en los que nadie lo espera del otro lado.
-Ni de este tampoco.
 
-[wait time="0.8"]
+El camino a la escuela siempre es pesado y vacío.
+No tengo con quién platicar y de todos modos no uso el camión escolar.
+Puedo llegar caminando.
+
+[wait time="0.4"]
+No importa si es cansado, es mejor que ver al resto de mis compañeros.
+...
+Al menos estando solo no me tengo que preocupar.
+
+[wait time="0.5"]
+# main.gd hace el fundido a negro y, bajo el negro, deja listo el pasillo: fondo de la escuela
+# sin transición y Darwin (poker) ya en el centro, sin animación. Luego fundido de negro a escuela.
+[signal arg="camino_escuela_fin"]
 
 # --- FASE 3: PASILLO DE LA SECUNDARIA ---
-[background arg="res://assets/backgrounds/school.png" fade="1.0" transition="Push Right"]
-[wait time="0.5"]
+[wait time="0.8"]
 
-join darwin (poker) center [animation="Slide From Right"]
-[wait time="0.4"]
-
-Darwin (poker): Casillero... número 47.
+Darwin (poker): Casillero... número 47... Casillero... Aquí estás.
 
 [wait time="0.3"]
-Darwin (poker): ...
-
-[wait time="0.5"]
 La sensación llega primero.
 Ese peso en el pecho.
-Ese zumbido sordo detrás de los oídos.
+Es un sentimiento indiscutiblemente pesado.
+
+[wait time="0.4"]
+Sé lo que se avecina, mientras les siga el juego no pasará a mayores.
+Es más fácil así.
+Es mi rutina.
 
 [wait time="0.5"]
 
@@ -99,32 +114,36 @@ join acosador3_por_definir (smirking) left [animation="Slide From Left" length="
 
 update darwin (scared) center
 
-acosador1_por_definir (threatening): Darwin.
+acosador1_por_definir (threatening): Darwin. Darwin. Darwin. Nos estábamos preguntando cuándo llegarías.
 
 [wait time="0.3"]
-acosador1_por_definir (threatening): Qué bueno que llegaste.
-acosador1_por_definir (threatening): Necesitamos la tarea de matemáticas.
+acosador1_por_definir (threatening): Con eso de que no te gusta usar el camión, nunca sabemos si llegarás o no.
+acosador1_por_definir (threatening): Y eso nos importa, porque nos debes una tarea de matemáticas, ¿recuerdas?
 
 [wait time="0.2"]
-acosador2_por_definir (laughing): Y los cien pesos para la salida.
+acosador2_por_definir (laughing): ¿Y el dinero para la comida, o acaso quieres que nos muramos de hambre, eh? No eres así de malo, ¿o sí?
 
-[wait time="0.1"]
-acosador3_por_definir (smirking): Ya sabes qué pasa si no los traes.
+[wait time="0.2"]
+acosador3_por_definir (smirking): De igual manera, ya sabes las opciones, ¿o no, pelo de hongo?
+
+[wait time="0.3"]
+acosador1_por_definir (threatening): Bueno, Darwin, ¿qué será? Es más, no digas nada y solo pasa las cosas, ni siquiera quiero conversar hoy.
 
 [wait time="0.5"]
 update darwin (scared) center
 
-Darwin no responde. Los mira.
-Calcula.
+No diré nada. No hay necesidad.
+Sé lo que debo de hacer.
+No me gusta estar cerca de ellos, pero aun así, son la interacción más importante de mi día.
+Qué asco.
 
-[wait time="0.4"]
-Si les digo que no...
-...volverán a encerrarme en el baño.
-Si les doy el dinero...
-...no tendré para comer hoy.
-
-[wait time="0.3"]
+[wait time="0.5"]
+Si les doy el dinero, no tendré para comer hoy.
+Qué más da.
+No tenía hambre de todos modos.
 A nadie en mi casa le importa de todos modos.
+...
+Qué asco.
 
 [wait time="0.5"]
 update darwin (resigned) center

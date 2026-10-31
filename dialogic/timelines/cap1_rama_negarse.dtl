@@ -13,11 +13,29 @@ acosador1_por_definir (threatening): ¿Cómo dijiste?
 [wait time="0.2"]
 acosador2_por_definir (laughing): Qué gracioso.
 
+[wait time="0.2"]
+acosador3_por_definir (smirking): Esa es nueva. ¿Dónde la aprendiste? Sabes que mentir no te sale nada bien.
+
+[wait time="0.3"]
+# En el guion esta línea es de "ACOSADOR" sin número: se asigna al acosador 1 (el líder).
+acosador1_por_definir (threatening): Pff, como quieras, de todos modos quería jugar un poco más hoy.
+
 [wait time="0.3"]
 update darwin (broken) center
 
-De un tirón le quitan la mochila de los hombros.
-Las cosas caen al suelo. Los cuadernos, los lápices, todo lo que tomó tanto tiempo acomodar esta mañana.
+Ahí es cuando siento un empujón.
+Fuerte, con intenciones de hacerme caer al suelo.
+
+[wait time="0.3"]
+
+# Darwin cae: su sprite se desliza hacia abajo hasta salir de la pantalla y suena fall.mp3.
+# Sin caja de diálogo; main.gd espera a que termine el audio y reanuda el timeline.
+[signal arg="darwin_caer"]
+
+[wait time="0.4"]
+Mi mochila sale volando, y con ella mis cuadernos y lápices.
+Me tomó tiempo organizar todo esta mañana...
+...
 
 [wait time="0.5"]
 acosador3_por_definir (smirking): Ah, mira, cuántos cuadernitos.
@@ -25,10 +43,22 @@ acosador3_por_definir (smirking): Ah, mira, cuántos cuadernitos.
 [wait time="0.2"]
 acosador1_por_definir (mocking): ¿Para qué los necesitas si de todas formas no estudias?
 
+[wait time="0.2"]
+acosador2_por_definir (laughing): Bueno, si nosotros no entregaremos la tarea, tú tampoco.
+
 [wait time="0.3"]
-Los arrancan. Los rompen.
+
+# Suena paper_rip.mp3 y la escena continúa sin esperar a que termine.
+[signal arg="sfx_papel"]
+Arrancan un par de páginas con tirones bruscos...
+No les importa que sean mis cuadernos...
 Frente a todos.
+
+[wait time="0.4"]
 Nadie interviene.
+Ni siquiera yo soy capaz de moverme.
+Tirado en el suelo.
+Pienso en el porqué.
 
 [wait time="0.5"]
 Darwin (broken): ...
@@ -39,13 +69,24 @@ leave acosador2_por_definir [animation="Slide To Right" length="0.3"]
 leave acosador3_por_definir [animation="Slide To Left" length="0.3"]
 [wait time="0.6"]
 
-Darwin se agacha a recoger lo que puede.
-Las hojas están arrugadas. Algunas, rotas por la mitad.
+Todavía puedo rescatar algo...
+...
+Excepto mi dignidad, supongo.
+
+[wait time="0.4"]
+Nadie dijo nada.
+...
+Nadie quiere estar en mi lugar.
+
+[wait time="0.4"]
+
+# Darwin se levanta: su sprite vuelve deslizándose hacia arriba.
+[signal arg="darwin_levantarse"]
 
 [wait time="0.4"]
 Darwin (broken): ...
-Darwin (broken): Está bien.
-Darwin (broken): No necesitaba esos cuadernos.
+Darwin (broken): Está bien...
+Darwin (broken): Esos cuadernos eran algo viejos de todos modos...
 
 [wait time="0.4"]
 No era verdad.
@@ -53,8 +94,5 @@ Los necesitaba.
 Pero decirlo no iba a devolverlos.
 
 [wait time="0.5"]
-[signal arg="darwin_postura_encorvada"]
-
-[wait time="0.3"]
 
 jump cap1_minijuego2/

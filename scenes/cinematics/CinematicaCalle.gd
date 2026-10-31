@@ -77,6 +77,13 @@ void fragment() {
 }
 """
 
+# Sprite de Darwin. main.gd puede cambiarlo antes de añadir la escena (p. ej. el camino a la
+# escuela usa la expresión inexpresiva).
+var textura_darwin: String = TEX_DARWIN
+# Pulso (latido de cámara, viñeta y destello). Se desactiva en el camino a la escuela; el
+# minijuego 2 lo usa.
+var con_pulso: bool = true
+
 var _t: float = 0.0
 var _mundo: Control
 var _darwin: TextureRect
@@ -154,7 +161,7 @@ func _ready() -> void:
 # ──────────────────────────────────────────────
 
 func _crear_darwin(raiz: Control) -> void:
-	_tex_normal = load(TEX_DARWIN) as Texture2D
+	_tex_normal = load(textura_darwin) as Texture2D
 	_tex_rage = load(TEX_DARWIN_RAGE) as Texture2D
 	if _tex_normal == null:
 		push_warning("[Cinemática] No se encontró el sprite de Darwin.")
@@ -311,6 +318,8 @@ func _atmosfera(delta: float) -> void:
 	var periodo: float = lerpf(HEART_PERIOD, HEART_PERIOD_FURY, _furia_amt)
 	_fase_latido = fposmod(_fase_latido + delta / periodo, 1.0)
 	var latido: float = exp(-pow(_fase_latido * 9.0, 2.0)) + 0.6 * exp(-pow((_fase_latido - 0.22) * 9.0, 2.0))
+	if not con_pulso:
+		latido = 0.0
 
 	var zoom: float = 1.0 + ZOOM_MAX * (1.0 - exp(-_t / ZOOM_TAU)) \
 			+ HEART_ZOOM * latido * (1.0 + _furia_amt) + FURIA_ZOOM * _furia_amt + IMPACTO_ZOOM * _impacto

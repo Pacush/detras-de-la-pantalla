@@ -21,6 +21,17 @@ const ESPERA_CINEMATICA_PESO_SILENCIO: float = 3.0
 const ESPERA_CINEMATICA_NUDO_RED: float = 3.0
 const FONDO_TRAS_PESO_SILENCIO: String = "res://assets/backgrounds/room.png"
 
+# Efectos de sonido sueltos de la historia de Darwin (rama "Negarse" del pasillo).
+const SFX_CAIDA: String = "res://assets/sounds/fall.mp3"
+const SFX_PAPEL: String = "res://assets/sounds/paper_rip.mp3"
+# Sprite de Darwin en la cinemática del camino a la escuela (expresión inexpresiva).
+const TEX_DARWIN_CAMINO: String = "res://assets/characters/Darwin/Darwin Poker.png"
+const FONDO_ESCUELA: String = "res://assets/backgrounds/school.png"
+const DARWIN_CAIDA_TIEMPO: float = 0.45       # segundos que tarda en deslizarse fuera de pantalla
+const DARWIN_LEVANTAR_TIEMPO: float = 0.8     # segundos que tarda en volver a su sitio
+const DARWIN_REBOTE: float = 12.0              # píxeles que se pasa hacia arriba al levantarse antes de asentarse
+const DARWIN_CAIDA_DISTANCIA: float = 1600.0  # píxeles que baja (de sobra para salir de la pantalla)
+
 const MenuBackdrop = preload("res://scripts/ui/menu_backdrop.gd")
 const UI = preload("res://scripts/ui/ui_style.gd")
 const Click = preload("res://scripts/ui/ui_click.gd")
@@ -40,6 +51,14 @@ var menu_backdrop: Control = null
 
 # Historial abierto desde el botón de la esquina (mismo panel que el de la pausa).
 var _history_layer: CanvasLayer = null
+
+# Se incrementa cada vez que se vuelve al menú: las rutinas con await (fundidos de minijuegos)
+# lo comparan al despertar y se cancelan si el jugador salió mientras esperaban.
+var _sesion: int = 0
+
+# Camino a la escuela de Darwin en curso. La bandera también vive en el estado de Dialogic
+# ("camino_escuela") para que quede dentro de las partidas guardadas.
+var _camino_activo: bool = false
 
 var current_menu: Node = null
 var nivel_instanciado: Node = null
@@ -114,7 +133,10 @@ func _ready() -> void:
 # ──────────────────────────────────────────────
 
 func show_main_menu() -> void:
+	_sesion += 1
 	game_started = false
+	_camino_activo = false
+	Dialogic.current_state_info.erase("camino_escuela")
 	_ocultar_estatica()
 	_cerrar_historial(false)
 	if gael != null and is_instance_valid(gael):
@@ -138,7 +160,14 @@ func show_main_menu() -> void:
 		Dialogic.current_state_info["portraits"] = {}
 	if habia_timeline:
 		Dialogic.end_timeline(true)
-	Dialogic.paused = false   # por si se salió con Dialogic en pausa (minijuego, historial...)
+	# Si se salió con Dialogic en pausa (minijuego, historial...), su rutina de eventos sigue
+	# esperando "dialogic_resumed". Al reanudar despierta sin eventos y llama a end_timeline()
+	# a secas, que crearía un layout nuevo (botón "Historial" sin estilo) encima del menú y
+	# bloquearía los clics. Se anula el timeline de cierre mientras se reanuda.
+	var cierre: DialogicTimeline = Dialogic.dialog_ending_timeline
+	Dialogic.dialog_ending_timeline = null
+	Dialogic.paused = false
+	Dialogic.dialog_ending_timeline = cierre
 
 	if is_instance_valid(layout):
 		(layout as Node).queue_free()
@@ -274,6 +303,7 @@ func restore_story_from_slot(slot_name: String) -> void:
 	var info: Dictionary = Dialogic.Save.get_slot_info(slot_name)
 	current_story = str(info.get("story", ""))
 	_musica_de_historia_tras_cargar()
+	_cinematica_camino_tras_cargar()
 
 
 ## Tras cargar una partida, pone el tema de su historia (se espera a que Dialogic termine de cargar).
@@ -367,6 +397,24 @@ func _on_dialogic_signal(signal_name: String) -> void:
 		"darwin_postura_encorvada":
 			_forzar_portrait_darwin("broken")
 
+		# ── Capítulo 1 de Darwin: camino a la escuela (cinemática con la narración encima) ──
+		"camino_escuela_inicio":
+			Dialogic.paused = true
+			_iniciar_camino_escuela()
+		"camino_escuela_fin":
+			Dialogic.paused = true
+			_terminar_camino_escuela()
+
+		# ── Capítulo 1 de Darwin, rama "Negarse": empujón, caída y rasgado de cuadernos ──
+		"darwin_caer":
+			Dialogic.paused = true
+			_darwin_caer()
+		"darwin_levantarse":
+			Dialogic.paused = true
+			_darwin_levantarse()
+		"sfx_papel":
+			_reproducir_sfx(SFX_PAPEL)   # suena sin detener la escena
+
 		# ── Fin de la historia (Darwin o Romina) → fundido a negro y menú principal ──
 		"cap1_fin", "romina_cap1_fin":
 			Dialogic.paused = true
@@ -398,8 +446,11 @@ func _on_dialogic_signal(signal_name: String) -> void:
 
 func _iniciar_minijuego_mochila() -> void:
 	# Fade suave a negro antes de mostrar el minijuego (la música cambia a la vez)
+	var sesion: int = _sesion
 	music.play_track("minijuego1")
 	await fade_to_black()
+	if sesion != _sesion:
+		return
 
 	minijuego_activo = minijuego_mochila_scene.instantiate()
 	add_child(minijuego_activo)
@@ -415,10 +466,13 @@ func _on_minijuego_completado() -> void:
 	# El minijuego se destruye solo al emitir la señal.
 	# Aquí ya no existe en el árbol, solo limpiamos la referencia.
 	minijuego_activo = null
+	var sesion: int = _sesion
 
 	# Fade a negro para la transición de vuelta a la novela visual; vuelve el tema del personaje
 	music.play_track(get_current_story())
 	await fade_to_black()
+	if sesion != _sesion:
+		return
 	_liberar_cinematica()
 	_mostrar_layout_dialogic(true)
 
@@ -433,8 +487,11 @@ func _on_minijuego_completado() -> void:
 # ──────────────────────────────────────────────
 
 func _iniciar_minijuego_rompecabezas() -> void:
+	var sesion: int = _sesion
 	music.play_track("minijuego1")
 	await fade_to_black()
+	if sesion != _sesion:
+		return
 
 	minijuego_activo = minijuego_rompecabezas_scene.instantiate()
 	add_child(minijuego_activo)
@@ -451,8 +508,11 @@ func _iniciar_minijuego_rompecabezas() -> void:
 ## sobre un fondo semitransparente (la cinemática sigue detrás, sombreada). Se oculta la caja
 ## de diálogo mientras dura.
 func _iniciar_minijuego_peso_silencio() -> void:
+	var sesion: int = _sesion
 	music.play_track("minijuego2")
 	await fade_to_black()
+	if sesion != _sesion:
+		return
 	_mostrar_layout_dialogic(false)
 	# Con la pantalla en negro (y luego tapado por la cinemática) se cambia ya el fondo al de la
 	# habitación, sin transición. Cuando el timeline pida el mismo fondo no hace nada, así que al
@@ -462,6 +522,8 @@ func _iniciar_minijuego_peso_silencio() -> void:
 	cinematica_activa = cinematica_calle_scene.instantiate()
 	add_child(cinematica_activa)
 	await fade_from_black()
+	if sesion != _sesion:
+		return
 
 	var juego: Node = minijuego_mashear_scene.instantiate()
 	juego.set("espera_inicial", ESPERA_CINEMATICA_PESO_SILENCIO)
@@ -477,13 +539,18 @@ func _iniciar_minijuego_peso_silencio() -> void:
 ## → a los 3 s entra el minijuego con fade-in → 3 s de instrucción → empieza. Al ganar, fundido a
 ## negro y vuelve el diálogo (lo hace _on_minijuego_completado).
 func _iniciar_minijuego_nudo_red() -> void:
+	var sesion: int = _sesion
 	music.play_track("minijuego2")
 	await fade_to_black()
+	if sesion != _sesion:
+		return
 	_mostrar_layout_dialogic(false)
 	_liberar_cinematica()
 	cinematica_activa = cinematica_cuarto_scene.instantiate()
 	add_child(cinematica_activa)
 	await fade_from_black()
+	if sesion != _sesion:
+		return
 
 	var juego: Node = minijuego_osu_scene.instantiate()
 	juego.set("espera_inicial", ESPERA_CINEMATICA_NUDO_RED)
@@ -493,6 +560,156 @@ func _iniciar_minijuego_nudo_red() -> void:
 	# Cada fallo: Romina se quiebra 1 s y sale estatica a media intensidad.
 	if cinematica_activa != null and cinematica_activa.has_method("registrar_fallo"):
 		juego.connect("fallo_sumado", Callable(cinematica_activa, "registrar_fallo"))
+
+
+# ──────────────────────────────────────────────
+# CAMINO A LA ESCUELA (DARWIN)
+# ──────────────────────────────────────────────
+
+## Fundido a negro → cinemática de la calle con Darwin caminando (sprite inexpresivo) → vuelve la
+## luz y Dialogic sigue mostrando la narración por encima. La cinemática va en la capa 0 (bajo el
+## layout de Dialogic, que está en la 1), así la caja de texto queda visible sobre ella; para que
+## el fondo de Dialogic no la tape se vacía mientras dura.
+func _iniciar_camino_escuela() -> void:
+	var sesion: int = _sesion
+	Dialogic.current_state_info["camino_escuela"] = true   # queda en las partidas guardadas
+	await fade_to_black()
+	if sesion != _sesion:
+		return
+	_crear_cinematica_camino()
+	await fade_from_black()
+	if sesion != _sesion:
+		return
+	Dialogic.paused = false
+
+
+## Fin de la narración del camino: fundido a negro, se retira la cinemática y sigue el timeline
+## (el siguiente evento pone el fondo del pasillo bajo el negro).
+func _terminar_camino_escuela() -> void:
+	var sesion: int = _sesion
+	Dialogic.current_state_info.erase("camino_escuela")
+	await fade_to_black()
+	if sesion != _sesion:
+		return
+	_camino_activo = false
+	_liberar_cinematica()
+
+	# Con la pantalla en negro se deja listo el pasillo: fondo de la escuela sin transición y
+	# Darwin ya en su sitio y con su expresión, sin animación de entrada. Así el fundido de
+	# negro a escuela no deja ver ningún fondo previo ni movimientos.
+	Dialogic.Text.hide_textbox(true)
+	Dialogic.Backgrounds.update_background("", FONDO_ESCUELA, 0.0)
+	var darwin: DialogicCharacter = DialogicResourceUtil.get_character_resource("darwin")
+	if darwin != null and not Dialogic.Portraits.is_character_joined(darwin):
+		await Dialogic.Portraits.join_character(darwin, "poker", "center", false, 0, "", "Fade In", 0.0, false)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if sesion != _sesion:
+		return
+
+	Dialogic.paused = false
+	await fade_from_black()
+
+
+## Vacía el fondo de Dialogic y pone la cinemática de la calle (Darwin inexpresivo) en la capa 0.
+func _crear_cinematica_camino() -> void:
+	Dialogic.Backgrounds.update_background("", "", 0.0)
+	_liberar_cinematica()
+	var cinematica: Node = cinematica_calle_scene.instantiate()
+	cinematica.set("textura_darwin", TEX_DARWIN_CAMINO)
+	cinematica.set("layer", 0)
+	cinematica.set("con_pulso", false)   # el pulso es solo de la cinemática del minijuego 2
+	cinematica_activa = cinematica
+	_camino_activo = true
+	add_child(cinematica)
+
+
+## Tras cargar una partida: si se guardó en mitad del camino a la escuela, vuelve a poner la
+## cinemática; si se cargó otro punto estando en el camino, la retira. (Se espera a que Dialogic
+## termine de cargar el estado, igual que con la música.)
+func _cinematica_camino_tras_cargar() -> void:
+	var sesion: int = _sesion
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if sesion != _sesion:
+		return
+	var en_camino: bool = bool(Dialogic.current_state_info.get("camino_escuela", false))
+	if en_camino:
+		_crear_cinematica_camino()
+	elif _camino_activo:
+		_camino_activo = false
+		_liberar_cinematica()
+
+
+# ──────────────────────────────────────────────
+# DARWIN EMPUJADO (rama "Negarse") Y EFECTOS DE SONIDO
+# ──────────────────────────────────────────────
+
+## Darwin cae: su sprite se desliza hacia abajo hasta salir de la pantalla mientras suena
+## fall.mp3. Sin caja de diálogo; el timeline sigue cuando termina el audio.
+func _darwin_caer() -> void:
+	var sesion: int = _sesion
+	Dialogic.Text.hide_textbox(true)
+	var sonido: AudioStreamPlayer = _reproducir_sfx(SFX_CAIDA)
+	var nodo: Node2D = _nodo_personaje("darwin")
+	var tween: Tween = null
+	if nodo != null:
+		nodo.set_meta("pos_base", nodo.position)
+		tween = create_tween()
+		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+		tween.tween_property(nodo, "position:y", nodo.position.y + DARWIN_CAIDA_DISTANCIA, DARWIN_CAIDA_TIEMPO)
+	if sonido != null:
+		await sonido.finished
+	elif tween != null:
+		await tween.finished
+	if sesion != _sesion:
+		return
+	Dialogic.paused = false
+
+
+## Darwin se levanta: su sprite vuelve deslizándose hacia arriba a donde estaba.
+func _darwin_levantarse() -> void:
+	var sesion: int = _sesion
+	Dialogic.Text.hide_textbox(true)
+	var nodo: Node2D = _nodo_personaje("darwin")
+	if nodo != null and nodo.has_meta("pos_base"):
+		var base: Vector2 = nodo.get_meta("pos_base")
+		var tween: Tween = create_tween()
+		# Sube frenando suave, se pasa un poco (DARWIN_REBOTE) y se asienta en su sitio. El rebote
+		# es pequeño para no dejar ver el borde inferior del sprite.
+		tween.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tween.tween_property(nodo, "position:y", base.y - DARWIN_REBOTE, DARWIN_LEVANTAR_TIEMPO * 0.8)
+		tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(nodo, "position:y", base.y, DARWIN_LEVANTAR_TIEMPO * 0.2)
+		await tween.finished
+	if sesion != _sesion:
+		return
+	Dialogic.paused = false
+
+
+## Nodo del personaje (el que contiene su retrato) si está en escena.
+func _nodo_personaje(id: String) -> Node2D:
+	var personaje: DialogicCharacter = DialogicResourceUtil.get_character_resource(id)
+	if personaje == null or not Dialogic.Portraits.is_character_joined(personaje):
+		return null
+	return Dialogic.Portraits.get_character_node(personaje) as Node2D
+
+
+## Reproduce un efecto de sonido suelto y devuelve su reproductor (se libera solo al terminar).
+## Devuelve null si el archivo no se puede cargar.
+func _reproducir_sfx(ruta: String) -> AudioStreamPlayer:
+	if not ResourceLoader.exists(ruta):
+		push_warning("[SFX] No existe '%s'." % ruta)
+		return null
+	var flujo: AudioStream = load(ruta) as AudioStream
+	if flujo == null:
+		return null
+	var reproductor: AudioStreamPlayer = AudioStreamPlayer.new()
+	reproductor.stream = flujo
+	reproductor.finished.connect(reproductor.queue_free)
+	add_child(reproductor)
+	reproductor.play()
+	return reproductor
 
 
 func _liberar_cinematica() -> void:
