@@ -1,46 +1,57 @@
 [style name="style2 (custom)"]
 
 # ===========================
-# FASE 5: MINIJUEGO 2 + FINAL (compartido por ambas ramas)
+# ESCENA FINAL + MINIJUEGO 2 + FINAL (compartido por ambas ramas)
 # ===========================
 
+# --- ESCENA FINAL: EL NUDO EN LA RED ---
 # Ambas ramas llegan aquí con el cuarto a oscuras.
 [background arg="#050508ff" fade="1.5" transition="Simple Fade"]
 [wait time="1.0"]
 
 update romina (broken) center
-romina (broken): Tengo que borrarlo. Tengo que bloquearlo. Ahora mismo.
-
-[wait time="0.5"]
-Borras mensajes. Bloqueas cuentas. Cambias la privacidad de tu perfil.
-
-[wait time="0.4"]
-Pero por cada contacto que bloqueas, se abren tres chats nuevos.
-Cada uno lleva a servidores y a cuentas que ni siquiera conoces.
+romina (broken): Tengo que borrarlo. Tengo que bloquearlo. Tengo que salir de esto, no volver a hablar con él, nunca, nunca más.
 
 [wait time="0.6"]
-# Minijuego "El Nudo en la Red" (estilo osu!): bloquear nodos a tiempo mientras se abren más.
+Borré mensajes, bloqueé cuentas, cambié la privacidad de mi perfil...
+Me dio mucha ansiedad, mis dedos no respondían, casi tiro el celular un par de veces mientras mis lágrimas hacían difícil usar la pantalla.
+Lo arruiné...
+...
+
+[wait time="0.6"]
+# --- MINIJUEGO 2: "EL NUDO EN LA RED" (estilo osu!) ---
+# Fundido a negro → cinemática del cuarto en penumbra con luz azul → el minijuego aparece encima.
 # Representa la imposibilidad de borrar algo una vez subido a internet.
-# Si falla (5 fallos) → se reinicia solo (RETRY). Al ganar → continúa.
-# Se juega sobre una cinemática de fondo (pendiente), con fondo semitransparente.
+# Con cada fallo Romina se quiebra 1 s y aparece una ráfaga de estática.
+# Si falla demasiado (5 fallos) → se reinicia solo (RETRY). Al ganar → continúa.
 [signal arg="trigger_minijuego_nudo_red"]
 
 [wait time="0.8"]
 
 # --- FINAL ---
-Bloqueaste la cuenta, pero la foto... la amenaza ya no están bajo tu control.
-
-[wait time="1.0"]
-Apagas la pantalla, pero el miedo a lo que pasará mañana no te deja cerrar los ojos.
-No puedes convencerte de que esa no eres tú. No sabes quién eres.
+Bloqueé la cuenta... Pero ¿qué pasa si no es suficiente?... ¿Si el día de mañana hace una nueva?
+¿Qué pasa si alguien se da cuenta?
+¿Qué pasa si mis mensajes terminan en mi grupo de la escuela?
+¿Qué pasa si pierdo mi privacidad?
+...
 
 [wait time="0.8"]
-update romina (broken) center
-romina (broken): ...
+Ni siquiera puedo dormir bien sin pensar en esto.
+Sin pensar en cuándo obtendré una consecuencia por lo que hice.
+Sin saber qué fue lo que pasó.
+Quién era "Gael"... quién era... quién era yo en ese momento.
+...
+
+[wait time="0.8"]
+Lo sé.
+...
+Era una tonta.
 
 [wait time="1.0"]
-leave romina [animation="Fade Out" length="1.0"]
-[wait time="1.0"]
+# Romina sale con desvanecimiento lento.
+leave romina [animation="Fade Out" length="2.0"]
+[wait time="2.0"]
 
-# Pantalla a negro. Fin del Capítulo 1 de Romina.
+# Pantalla a negro. Fin del Capítulo 1 de Romina. Fundido a negro y regreso al menú principal.
 [signal arg="romina_cap1_fin"]
+

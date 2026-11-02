@@ -1,9 +1,11 @@
 extends CanvasLayer
 ## Minijuego 2 de Romina — "El Nudo en la Red" (estilo osu!).
 ##
-## Haz clic en los nodos cuando el anillo los alcance; en las líneas, mantén el clic y sigue
-## la bolita hasta el final. Demasiados fallos y el nudo se cierra: el minijuego se reinicia
-## solo (RETRY). `completado` se emite únicamente al ganar y el nodo se destruye solo.
+## Haz clic (o pulsa Z / X) en los nodos cuando el anillo los alcance, con el mouse encima; en
+## las líneas, mantén el clic (o Z / X) y sigue la bolita hasta el final.
+## Tras perder DERROTAS_PARA_SALTAR veces aparece el botón "Saltar >" (bajo el de Historial): al
+## pulsarlo el minijuego se destruye al instante y emite `saltado` (main.gd se encarga del resto).
+## Demasiados fallos y el nudo se cierra: el minijuego se reinicia solo (RETRY). `completado` se emite únicamente al ganar y el nodo se destruye solo.
 ##
 ## Todo el input va por un Control raíz (gui_input), igual que la mochila y el rompecabezas:
 ## Dialogic (DialogicNode_Input) se come los eventos de mouse en la fase GUI, así que Area2D o
@@ -20,6 +22,8 @@ extends CanvasLayer
 signal completado
 ## Se suma un fallo (nodo perdido); la cinematica de fondo reacciona.
 signal fallo_sumado
+## El jugador pulsó "Saltar": el minijuego se destruye y no se emite `completado`.
+signal saltado
 
 const UI = preload("res://scripts/ui/ui_style.gd")
 const C = preload("res://scripts/ui/ui_colors.gd")
@@ -31,7 +35,10 @@ const SPAWN_START: float = 0.62           # segundos entre nodos al empezar...
 const SPAWN_END: float = 0.34             # ...y al final de la partida (acelera)
 const PAIR_CHANCE: float = 0.28           # probabilidad de que salgan dos nodos a la vez
 const SLIDER_CHANCE: float = 0.16
-const MAX_FALLOS: int = 7                 # al séptimo fallo, RETRY
+const MAX_FALLOS: int = 10                 # al décimo fallo, RETRY
+const DERROTAS_PARA_SALTAR: int = 3        # tras perder tantas veces aparece el botón "Saltar >"
+const SALTAR_TOP: float = 63.0             # justo bajo el botón "Historial" (7 + 48 de alto + 8)
+const SALTAR_MARGEN: float = 9.0           # separación del borde derecho (igual que "Historial")
 
 # --- Nodos ---
 const PIX: int = 3                        # los nodos se dibujan a 1/3 de resolución
@@ -61,9 +68,9 @@ const COL_SOMBRA: Color = Color(0.0, 0.0, 0.03, 0.55)
 const COL_ROJO: Color = Color(0.85, 0.42, 0.5)
 
 const INSTRUCCION: Array[String] = [
-	"Bloquea los nodos: haz clic cuando el anillo los alcance.",
-	"En las líneas, mantén el clic y desliza siguiendo el nodo.",
-	"Cinco fallos y el nudo se cierra.",
+	"Bloquea los nodos: haz clic (o pulsa Z / X) cuando el anillo los alcance.",
+	"En las líneas, mantén el clic (o Z / X) y desliza siguiendo el nodo.",
+	"Diez fallos y el nudo se cierra.",
 ]
 
 
@@ -115,6 +122,7 @@ var espera_inicial: float = 0.0
 var running: bool = false
 var puntos: int = 0
 var fallos: int = 0
+var derrotas: int = 0                     # intentos perdidos (no se reinicia al reintentar)
 var combo: int = 0
 var elapsed: float = 0.0
 var duracion: float = 16.0
@@ -136,6 +144,7 @@ var _intro: bool = true                   # la instrucción se muestra grande an
 var _terminado: bool = false
 var _tiempo: float = 0.0                  # reloj para animaciones continuas
 var _combo_pop: float = 0.0
+var _btn_saltar: Button = null
 
 
 func _ready() -> void:
@@ -178,6 +187,22 @@ func _ready() -> void:
 	_dibujo.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_dibujo.draw.connect(_dibujar_hud)
 	_raiz.add_child(_dibujo)
+
+	# Botón "Saltar >": mismo estilo y esquina que el de Historial, justo debajo de él. Dentro de
+	# _raiz (encima del Control que recibe el input) y oculto hasta perder varias veces.
+	_btn_saltar = Button.new()
+	_btn_saltar.text = "Saltar >"
+	_btn_saltar.visible = false
+	UI.style_button(_btn_saltar, 22, 48.0)
+	_btn_saltar.anchor_left = 1.0
+	_btn_saltar.anchor_right = 1.0
+	_btn_saltar.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	_btn_saltar.offset_left = -SALTAR_MARGEN
+	_btn_saltar.offset_right = -SALTAR_MARGEN
+	_btn_saltar.offset_top = SALTAR_TOP
+	_btn_saltar.offset_bottom = SALTAR_TOP + 43.0
+	_btn_saltar.pressed.connect(_on_saltar_pressed)
+	_raiz.add_child(_btn_saltar)
 
 	_entrar()
 
@@ -320,7 +345,7 @@ func _actualizar_nodo(n: Nodo, delta: float) -> void:
 	n.slide_t += delta
 	var bolita: Vector2 = _pos_bolita(n)
 	var mouse: Vector2 = _raiz.get_local_mouse_position()
-	n.siguiendo = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and mouse.distance_to(bolita) <= FOLLOW_RADIO
+	n.siguiendo = _accion_sostenida() and mouse.distance_to(bolita) <= FOLLOW_RADIO
 	if n.siguiendo:
 		n.seguido += delta
 		# Estela de chispas mientras se mantiene el clic sobre la bolita.
@@ -429,12 +454,17 @@ func _terminar_intento(gano: bool) -> void:
 	_result_timer = RESULT_TIME
 	if gano:
 		_ganar()
+	else:
+		derrotas += 1
+		if derrotas >= DERROTAS_PARA_SALTAR:
+			_btn_saltar.visible = true
 
 
 func _ganar() -> void:
 	if _terminado:
 		return
 	_terminado = true
+	_btn_saltar.visible = false
 	await get_tree().create_timer(RESULT_TIME).timeout
 	var tween: Tween = create_tween()
 	tween.tween_property(_raiz, "modulate:a", 0.0, FADE_OUT_TIME)
@@ -454,6 +484,34 @@ func _on_gui_input(event: InputEvent) -> void:
 	_raiz.accept_event()
 	if mb.pressed and running:
 		_clic(mb.position)
+
+
+## Z y X funcionan como el clic: aciertan el nodo que esté bajo el mouse.
+func _input(event: InputEvent) -> void:
+	var tecla: InputEventKey = event as InputEventKey
+	if tecla == null or not tecla.pressed or tecla.echo:
+		return
+	if tecla.keycode != KEY_Z and tecla.keycode != KEY_X:
+		return
+	get_viewport().set_input_as_handled()
+	if running:
+		_clic(_raiz.get_local_mouse_position())
+
+
+## ¿Está pulsado el clic izquierdo, Z o X? (para seguir los sliders)
+func _accion_sostenida() -> bool:
+	return Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.is_key_pressed(KEY_Z) or Input.is_key_pressed(KEY_X)
+
+
+## "Saltar >": el minijuego desaparece al instante (con su oscurecimiento) y main.gd continuará.
+func _on_saltar_pressed() -> void:
+	if _terminado:
+		return
+	_terminado = true
+	running = false
+	_nodos.clear()
+	saltado.emit()
+	queue_free()
 
 
 func _clic(punto: Vector2) -> void:

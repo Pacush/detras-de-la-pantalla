@@ -3,44 +3,49 @@
 # ============================================================
 # CAPÍTULO 1 (ROMINA): LA FOTO QUE NO SE BORRA
 # Historia de Romina — Grooming, falsas relaciones y pérdida de intimidad
+# Narración en primera persona (la voz de Romina).
 # ============================================================
 
-# --- FASE 1: TARDE EN EL CUARTO ---
-# [PLACEHOLDER FONDO] Habitación de Romina por la tarde. Usar room.jpg temporal.
+# --- ESCENA 1: TARDE EN EL CUARTO ---
 [background arg="res://assets/backgrounds/room-romina.png" fade="1.0" wait="true"]
 
 [wait time="0.5"]
-La tarde se apaga despacio en la habitación de Romina.
-La luz naranja se arrastra por el suelo y nadie enciende ninguna lámpara.
+Otra tarde aburrida de escuela. Digo, es lo normal, estoy acostumbrada a días lentos.
+Aunque últimamente tengo una travesura personal que me ha mantenido despierta durante las noches.
+Así es, estoy empezando a salir con un chico que, por cierto, es realmente amigable.
 
-[wait time="0.8"]
+[wait time="0.6"]
 join romina (glad) center [animation="Fade In" length="0.8"]
 [wait time="0.5"]
 
-romina (glad): ...
+romina (glad): Listo, esos eran mis últimos deberes escolares. Ahora...
 
 [wait time="0.4"]
-Romina está sentada en la cama, mirando el techo.
-La tarea ya está terminada. La casa está en silencio.
+Estando sentada en mi cama, sin nada que hacer. Oh, qué desdicha la mía.
 
-[wait time="0.8"]
+# phone_buzz.mp3 suena una vez y el diálogo espera a que termine.
+[signal arg="sfx_buzz_esperar"]
+[wait time="0.3"]
+Un sonido zumbante llega a mi celular. ¿Será quien creo que es?
+
+# phone_buzz.mp3 suena dos veces seguidas sin detener los diálogos.
+[signal arg="sfx_buzz_doble"]
 Bzzz.
-[wait time="0.5"]
 Bzzz. Bzzz.
 
 [wait time="0.4"]
-romina (glad): ...¿Otra vez el grupo del salón?
+romina (glad): Espero que no sea el grupo del salón pidiendo la tarea otra vez.
 
 [wait time="0.4"]
-El celular vibra sobre la mesa de noche sin parar.
-Romina se levanta y camina hacia él.
+Me levanto de la cama y voy por mi celular.
+
+[wait time="0.4"]
+romina (glad): Ughhh, lo sabía, solamente se les olvidó la tarea. Es muy obvio.
 
 [wait time="0.5"]
-romina (glad): Cinco notificaciones y ninguna es para mí.
-
-[wait time="0.6"]
-Todos en el grupo suben fotos nuevas.
-Todos parecen tener a alguien que les responda.
+Todos en el grupo suben fotos junto a sus amigos e incluso junto a sus parejas.
+Todos parecen tener a alguien.
+Nunca he sido una chica precisamente celosa, pero sí curiosa, y no puedo evitar pensar mucho cuando abro este grupo...
 
 [wait time="0.5"]
 update romina (sad) center
@@ -48,47 +53,51 @@ update romina (sad) center
 romina (sad): ...Quizá si cambio mi foto de perfil, alguien se fije.
 
 [wait time="0.5"]
-Abres la aplicación. Eliges una foto tuya.
-Pero se ve rota, hecha pedazos. Tienes que armarla antes de subirla.
+Bueno, veamos qué fotos podría utilizar...
+Esta no, esta menos, ay, qué fea me veo en esta... Ajá, creo que esta es perfecta.
+Solamente tengo que editarla un poco antes de subirla, jejeje.
 
 [wait time="0.4"]
 update romina (glad) center
 
-# --- FASE 2: MINIJUEGO 1 — "ROMPECABEZAS" ---
-# Romina toma el celular → lanza el Minijuego 1.
+# --- MINIJUEGO 1 — "ROMPECABEZAS" ---
 # El timeline queda pausado hasta que el jugador complete el minijuego.
 [signal arg="trigger_minijuego_rompecabezas"]
 
 # ── Continúa al volver del minijuego ──
+# --- ESCENA 2: LA FOTO DE PERFIL ---
 [wait time="0.3"]
-Armaste la foto. Quedó muy bien.
-Esperas que tus compañeros de la escuela le den 'me gusta'.
-
-[wait time="0.6"]
-Subes la foto.
+Esa foto es preciosa.
+A alguien le parecerá interesante.
+Alguien se fijará en mí, seguramente.
 
 [wait time="0.8"]
-Un me gusta. Luego otro.
-Ninguno viene de tu escuela.
+Después de tres horas no pasa nada. Ugh, ya me desesperé. ¿De verdad soy tan aburrida?
+Ya sé, la subiré a mi red social favorita. Digo, quizás algún chico de la escuela que no sea de mi grupo la ve.
+Oh, jeje, soy bastante inteligente.
+...
+Bueno, hasta ahora solamente mi abuela le ha dado un corazón.
 
 [wait time="0.6"]
 update romina (sad) center
 
-romina (sad): ...Bueno. Al menos alguien la vio.
+romina (sad): ...¿Qué? ¿Otro corazón? Pero ni siquiera conozco a esta persona... Quizás sea un chico nuevo en el barrio.
 
-# --- FASE 3: TRANSICIÓN AL CONFLICTO (INTERFAZ CHAT) ---
+# --- ESCENA 3: EL MENSAJE DE UN DESCONOCIDO (INTERFAZ DE CHAT) ---
 [wait time="1.0"]
+# phone_buzz.mp3 suena una vez sin detener el diálogo.
+[signal arg="sfx_buzz"]
 Bzzz.
 
 [wait time="0.4"]
-Un mensaje nuevo. De alguien que no conoces.
+Un mensaje nuevo... Debería revisar quién es.
 
 [wait time="0.6"]
-gael_19 (default): Hola Romina, vi tu foto. Te ves increíble. Se nota que eres mucho más madura que las niñas de tu edad.
+gael_19 (default): Hola Romina, vi tu foto. Te ves increíble. Se nota que eres mucho más madura y linda que las niñas de tu edad.
 
 [wait time="0.5"]
-Su perfil no tiene foto. Solo un nombre, un guion bajo y un número.
-Pero nadie te había dicho algo así antes.
+Veo su foto de perfil\: es un perrito. No puedo identificar quién usaría algo así, y el nombre tampoco me suena.
+Investiguemos más, jejeje.
 
 [wait time="0.4"]
 update romina (glad) center
@@ -98,11 +107,13 @@ romina (glad): ...¿Gracias? ¿Te conozco?
 [wait time="0.3"]
 gael_19 (default): Todavía no. Pero me gustaría.
 
-# Pasan los días en texto rápido (fundido a negro, igual que los saltos de tiempo de Darwin).
+# --- TRANSICIÓN: PASAN LOS DÍAS (fundido a negro, igual que los saltos de tiempo de Darwin) ---
 [wait time="1.0"]
 [background arg="#000000ff" fade="1.0" transition="Simple Fade"]
-Pasan los días.
-Los mensajes llegan en la mañana, en el recreo, en la noche.
+Han pasado un par de semanas desde que empecé a chatear con Gael.
+Parece un chico muy amable, me gusta su forma de conversar.
+Dice que vive cerca, pero que va a un colegio diferente.
+No he tenido ganas de irme de pinta para poder conocerlo, pero es el próximo gran paso que podría dar.
 
 [wait time="0.6"]
 [background arg="res://assets/backgrounds/room-romina.png" fade="1.0" transition="Simple Fade" wait="true"]
@@ -110,47 +121,54 @@ Los mensajes llegan en la mañana, en el recreo, en la noche.
 gael_19 (default): ¿Cómo te fue hoy?
 
 [wait time="0.2"]
-romina (glad): Igual que siempre. Nadie se fija en mí.
+romina (glad): Igual que siempre... un día aburrido, cosas aburridas, tarea difícil, buah, ya quería llegar a casa y platicar contigo.
 
 [wait time="0.2"]
-gael_19 (default): Yo sí me fijo. Siempre.
+gael_19 (default): Me agrada charlar contigo. Siempre.
 
-[wait time="0.4"]
+[wait time="0.2"]
 gael_19 (default): Tus papás no te entienden, ¿verdad? Yo sí.
 
 [wait time="0.3"]
 update romina (sad) center
 
-romina (sad): ...Eres el único que me escucha.
+romina (sad): ...Eres el único que me escucha... Gracias.
+
+[wait time="0.3"]
+gael_19 (default): Un placer, amiga.
 
 [wait time="0.6"]
-Romina encuentra en Gael a la persona que la escucha cuando se siente sola.
-Sin darte cuenta, se vuelve lo primero que buscas al despertar.
-Y lo último antes de dormir.
+update romina (glad) center
+Es un chico muy amable. Nadie me había hablado así antes, se siente bien, me siento feliz.
+Lo primero al despertar es decirle cómo dormí, lo último al dormir es decirle cómo despertaré. Se volvió un ciclo.
+Pero mi ánimo ha mejorado bastante este último mes, casi ni me he fijado en los demás chicos de la escuela.
+Se volvieron aburridos.
 
 # --- EL GIRO ---
 [wait time="1.0"]
-Una noche, el celular vibra más tarde que de costumbre.
+Una noche, mi celular vibra más tarde que de costumbre.
 
 [wait time="0.5"]
-update romina (uneasy) center
 
 gael_19 (default): Romina, si de verdad confías en mí como dices, mándame una foto más personal. Algo solo para mí. Prometo que la borro de inmediato.
 
-[wait time="0.8"]
+[wait time="1.0"]
+update romina (uneasy) center
 romina (uneasy): ...
 
 [wait time="0.6"]
 Siento que está mal...
 Pero él es el único que me pone atención y me hace sentir especial.
-
-[wait time="0.6"]
-Los tres puntitos aparecen. Desaparecen. Aparecen otra vez.
+No estoy segura, nunca antes me había pedido algo así...
+Pero no debería pasar nada, ¿verdad? Es mi amigo.
+Estas cosas se hacen entre amigos.
+...
+¿Verdad?
 
 [wait time="0.5"]
 update romina (scared) center
 
-# --- FASE 4: ÁRBOL DE DECISIÓN ---
+# --- DECISIÓN DEL JUGADOR ---
 # Cada opción salta a su propio timeline separado (contenido indentado
 # con tab debajo de cada línea "- "). Esto garantiza que los dos caminos
 # nunca se ejecuten juntos.

@@ -19,11 +19,15 @@ var cinematica_activa: Node = null
 const ESPERA_CINEMATICA_PESO_SILENCIO: float = 3.0
 # Segundos de cinemática de fondo antes de que aparezca "El Nudo en la Red" (Romina).
 const ESPERA_CINEMATICA_NUDO_RED: float = 3.0
+# Segundos que se queda la cinemática de Romina "en modo fallo" tras pulsar Saltar, antes del fundido.
+const ESPERA_SALTO_NUDO_RED: float = 1.0
 const FONDO_TRAS_PESO_SILENCIO: String = "res://assets/backgrounds/room.png"
 
 # Efectos de sonido sueltos de la historia de Darwin (rama "Negarse" del pasillo).
 const SFX_CAIDA: String = "res://assets/sounds/fall.mp3"
 const SFX_PAPEL: String = "res://assets/sounds/paper_rip.mp3"
+# Vibración del celular de Romina ("Bzzz").
+const SFX_BUZZ: String = "res://assets/sounds/phone_buzz.mp3"
 # Sprite de Darwin en la cinemática del camino a la escuela (expresión inexpresiva).
 const TEX_DARWIN_CAMINO: String = "res://assets/characters/Darwin/Darwin Poker.png"
 const FONDO_ESCUELA: String = "res://assets/backgrounds/school.png"
@@ -137,6 +141,7 @@ func show_main_menu() -> void:
 	game_started = false
 	_camino_activo = false
 	Dialogic.current_state_info.erase("camino_escuela")
+	Dialogic.current_state_info.erase("musica_silencio")
 	_ocultar_estatica()
 	_cerrar_historial(false)
 	if gael != null and is_instance_valid(gael):
@@ -310,6 +315,10 @@ func restore_story_from_slot(slot_name: String) -> void:
 func _musica_de_historia_tras_cargar() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
+	# Si se guardó en el silencio de Romina (tras la decisión), no vuelve el tema todavía.
+	if bool(Dialogic.current_state_info.get("musica_silencio", false)):
+		music.stop_music()
+		return
 	music.play_track(get_current_story())
 
 
@@ -414,6 +423,20 @@ func _on_dialogic_signal(signal_name: String) -> void:
 			_darwin_levantarse()
 		"sfx_papel":
 			_reproducir_sfx(SFX_PAPEL)   # suena sin detener la escena
+
+		# ── Capítulo 1 de Romina: vibración del celular ──
+		"sfx_buzz_esperar":
+			Dialogic.paused = true
+			_buzz_y_esperar()   # suena una vez y el diálogo sigue cuando termina
+		"sfx_buzz":
+			_reproducir_sfx(SFX_BUZZ)   # suena una vez sin detener la escena
+		"sfx_buzz_doble":
+			_reproducir_sfx_repetido(SFX_BUZZ, 2)   # dos seguidas sin detener la escena
+
+		# ── Capítulo 1 de Romina: silencio tras la decisión (hasta el minijuego 2) ──
+		"musica_silencio":
+			Dialogic.current_state_info["musica_silencio"] = true   # queda en las partidas guardadas
+			music.stop_music()
 
 		# ── Fin de la historia (Darwin o Romina) → fundido a negro y menú principal ──
 		"cap1_fin", "romina_cap1_fin":
@@ -540,6 +563,7 @@ func _iniciar_minijuego_peso_silencio() -> void:
 ## negro y vuelve el diálogo (lo hace _on_minijuego_completado).
 func _iniciar_minijuego_nudo_red() -> void:
 	var sesion: int = _sesion
+	Dialogic.current_state_info.erase("musica_silencio")   # termina el silencio de la decisión
 	music.play_track("minijuego2")
 	await fade_to_black()
 	if sesion != _sesion:
@@ -557,9 +581,24 @@ func _iniciar_minijuego_nudo_red() -> void:
 	minijuego_activo = juego
 	add_child(juego)
 	juego.connect("completado", _on_minijuego_completado)
+	juego.connect("saltado", _on_nudo_red_saltado)
 	# Cada fallo: Romina se quiebra 1 s y sale estatica a media intensidad.
 	if cinematica_activa != null and cinematica_activa.has_method("registrar_fallo"):
 		juego.connect("fallo_sumado", Callable(cinematica_activa, "registrar_fallo"))
+
+
+## El jugador pulsó "Saltar >" en El Nudo en la Red: el minijuego (y su oscurecimiento) ya
+## desapareció; la cinemática se queda 1 s con el aspecto de un fallo y luego se sigue como si se
+## hubiera ganado (fundido a negro y vuelve el diálogo).
+func _on_nudo_red_saltado() -> void:
+	var sesion: int = _sesion
+	minijuego_activo = null
+	if cinematica_activa != null and is_instance_valid(cinematica_activa) and cinematica_activa.has_method("registrar_fallo"):
+		cinematica_activa.call("registrar_fallo")
+	await get_tree().create_timer(ESPERA_SALTO_NUDO_RED).timeout
+	if sesion != _sesion:
+		return
+	_on_minijuego_completado()
 
 
 # ──────────────────────────────────────────────
@@ -685,6 +724,31 @@ func _darwin_levantarse() -> void:
 	if sesion != _sesion:
 		return
 	Dialogic.paused = false
+
+
+## Vibración del celular que detiene el diálogo (sin caja de texto) hasta que termina el audio.
+func _buzz_y_esperar() -> void:
+	var sesion: int = _sesion
+	Dialogic.Text.hide_textbox(true)
+	var sonido: AudioStreamPlayer = _reproducir_sfx(SFX_BUZZ)
+	if sonido != null:
+		await sonido.finished
+	if sesion != _sesion:
+		return
+	Dialogic.paused = false
+
+
+## Reproduce un efecto varias veces seguidas (cada una empieza cuando termina la anterior) sin
+## detener el diálogo. Se corta si el jugador sale al menú.
+func _reproducir_sfx_repetido(ruta: String, veces: int) -> void:
+	var sesion: int = _sesion
+	for i: int in veces:
+		var sonido: AudioStreamPlayer = _reproducir_sfx(ruta)
+		if sonido == null:
+			return
+		await sonido.finished
+		if sesion != _sesion:
+			return
 
 
 ## Nodo del personaje (el que contiene su retrato) si está en escena.

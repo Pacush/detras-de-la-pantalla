@@ -1,7 +1,7 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bvi1yjdq4bped"]
 
-[ext_resource type="Script" path="res://scenes/minigames/osu_killer/MinijuegoOsuKiller.gd" id="1_osu"]
+[ext_resource type="Script" uid="uid://d2qdny3ojuxlu" path="res://scenes/minigames/osu_killer/MinijuegoOsuKiller.gd" id="1_osu"]
 
-[node name="MinijuegoOsuKiller" type="CanvasLayer"]
+[node name="MinijuegoOsuKiller" type="CanvasLayer" unique_id=248381860]
 layer = 90
 script = ExtResource("1_osu")
