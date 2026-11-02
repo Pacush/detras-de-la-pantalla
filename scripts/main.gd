@@ -785,6 +785,7 @@ func _liberar_cinematica() -> void:
 ## Gael aparece cuando él habla y se queda mientras sigue el chat con Romina; desaparece en
 ## cuanto habla otro personaje que no sea ella o el narrador.
 func _on_texto_a_mostrar(info: Dictionary) -> void:
+	UserSettings.apply_text_sizes(get_tree())   # tamaño de texto elegido en Ajustes
 	if get_current_story() != "romina":
 		return
 	var personaje: Variant = info.get("character", null)
